@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CSC40 Milestone 3 – Visual Review &amp; Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&family=Tajawal:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#eef3f9; --surface:#ffffff; --surface2:#f4f7fb; --ink:#1b2b4b; --muted:#56637d; --border:#d6deea;
+  --t1:#1c6fd1; --t1soft:#e2eefc; --t2:#7a3fd1; --t2soft:#efe6fc;
+  --ok:#1f9d4c; --oksoft:#dcf5e5; --bad:#d23a3a; --badsoft:#fde4e4; --hint:#b86e00; --hintsoft:#fff1d6;
+  --copper:#c4561b; --fiber:#0aa2c0; --bulb:#ffc928; --onaccent:#ffffff; --wire:#8a97ad;
+  --radius-l:22px; --radius-m:14px; --radius-s:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0e1626; --surface:#162136; --surface2:#1d2a43; --ink:#e7edf8; --muted:#a6b3cb; --border:#2c3b58;
+    --t1:#6aa8ff; --t1soft:#18304f; --t2:#b48cff; --t2soft:#2b2148;
+    --ok:#4fd27f; --oksoft:#143826; --bad:#ff7b7b; --badsoft:#45191d; --hint:#ffc35a; --hintsoft:#3b2c0c;
+    --copper:#ff9a5c; --fiber:#3fdcf5; --bulb:#ffd447; --onaccent:#0e1626; --wire:#6d7d99;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0e1626; --surface:#162136; --surface2:#1d2a43; --ink:#e7edf8; --muted:#a6b3cb; --border:#2c3b58;
+  --t1:#6aa8ff; --t1soft:#18304f; --t2:#b48cff; --t2soft:#2b2148;
+  --ok:#4fd27f; --oksoft:#143826; --bad:#ff7b7b; --badsoft:#45191d; --hint:#ffc35a; --hintsoft:#3b2c0c;
+  --copper:#ff9a5c; --fiber:#3fdcf5; --bulb:#ffd447; --onaccent:#0e1626; --wire:#6d7d99;
+}
+html{height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:'Lexend',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:17px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+button{font:inherit;color:inherit}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--t1);outline-offset:2px}
+.ar{font-family:'Tajawal','Noto Naskh Arabic','Segoe UI',Tahoma,sans-serif;direction:rtl;unicode-bidi:isolate;font-weight:700}
+body:not(.show-ar) .ar{display:none!important}
+b,strong{font-weight:700}
+.muted{color:var(--muted)}
+.code{font-family:'Lexend',monospace;font-weight:700;letter-spacing:.18em;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:1px 8px}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--border);}
+.top-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;cursor:pointer;background:none;border:0;padding:4px}
+.brand .logo{display:flex;gap:3px}
+.brand .logo i{width:20px;height:20px;border-radius:5px;display:grid;place-items:center;font-style:normal;font-size:11px;color:#fff;font-weight:800}
+.brand small{display:block;font-weight:500;color:var(--muted);font-size:12px;line-height:1.1}
+.top .sp{flex:1}
+.tbtn{border:1px solid var(--border);background:var(--surface2);border-radius:999px;padding:7px 14px;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px}
+.tbtn[aria-pressed="true"]{background:var(--t1soft);border-color:var(--t1);color:var(--t1)}
+.pill-progress{font-size:13px;color:var(--muted);font-weight:600;white-space:nowrap}
+
+main{max-width:1080px;margin:0 auto;padding:22px 16px 80px}
+
+/* home */
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:26px;align-items:center;margin:8px 0 30px}
+.hero h1{font-size:clamp(30px,5vw,46px);line-height:1.08;margin:0 0 12px;font-weight:800;letter-spacing:-.02em}
+.hero p{margin:0 0 10px;font-size:18px;color:var(--muted);max-width:52ch}
+.path{display:flex;flex-direction:column;gap:10px}
+.path .st{display:flex;gap:14px;align-items:center;background:var(--surface);border:2px solid var(--border);border-radius:var(--radius-m);padding:12px 14px}
+.path .st .n{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:22px;background:var(--surface2)}
+.path .st b{display:block}
+.path .st span{font-size:14px;color:var(--muted)}
+.topic{margin:34px 0 14px;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap}
+.topic .tn{font-size:15px;font-weight:700;padding:4px 12px;border-radius:999px;color:var(--onaccent)}
+.topic h2{margin:0;font-size:26px;line-height:1.2}
+.topic .ar{font-size:20px;color:var(--muted)}
+.topic .pcs{font-size:13px;color:var(--muted);margin-left:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.scard{text-align:left;cursor:pointer;background:var(--surface);border:2px solid var(--border);border-radius:var(--radius-l);padding:18px;display:flex;flex-direction:column;gap:6px;transition:transform .15s,border-color .15s}
+.scard:hover{transform:translateY(-3px);border-color:var(--c)}
+.scard .ic{font-size:40px;line-height:1}
+.scard b{font-size:19px;line-height:1.25}
+.scard .ar{color:var(--muted);font-size:16px}
+.scard .d{font-size:14px;color:var(--muted);flex:1}
+.bar{height:10px;border-radius:999px;background:var(--surface2);border:1px solid var(--border);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--c,var(--ok));border-radius:999px;transition:width .4s}
+.scard .meta{font-size:13px;font-weight:600;color:var(--muted);display:flex;justify-content:space-between}
+.final-card{margin-top:34px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;background:var(--ink);color:var(--bg);border-radius:var(--radius-l);padding:22px 24px}
+.final-card .ic{font-size:48px}
+.final-card h3{margin:0;font-size:22px}
+.final-card p{margin:2px 0 0;opacity:.85}
+.final-card .sp{flex:1}
+.reset{margin-top:16px;background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:14px}
+
+/* buttons */
+.btn{border:0;cursor:pointer;background:var(--c,var(--t1));color:var(--onaccent);font-weight:700;font-size:16px;border-radius:999px;padding:12px 22px;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:var(--surface2);color:var(--ink);border:2px solid var(--border)}
+.btn.small{font-size:14px;padding:8px 14px}
+.btn.light{background:var(--bg);color:var(--ink)}
+.link{background:none;border:0;cursor:pointer;color:var(--c,var(--t1));font-weight:700;padding:6px 0;font-size:15px}
+
+/* section */
+.shead{border-radius:var(--radius-l);padding:22px 24px;background:var(--csoft);border:2px solid var(--c);display:flex;gap:18px;align-items:center;margin:6px 0 10px}
+.shead .ic{font-size:58px;line-height:1}
+.shead .tp{font-size:14px;font-weight:700;color:var(--c)}
+.shead h1{margin:2px 0;font-size:clamp(26px,4vw,36px);line-height:1.15}
+.shead .ar{font-size:21px;color:var(--muted)}
+.shead p{margin:6px 0 0;max-width:62ch}
+.steps-nav{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px}
+.steps-nav a{text-decoration:none;color:var(--ink);background:var(--surface);border:2px solid var(--border);border-radius:999px;padding:6px 14px;font-size:14px;font-weight:600}
+.step{display:flex;align-items:center;gap:12px;margin:38px 0 14px;font-size:24px;line-height:1.2}
+.step .num{flex:none;width:42px;height:42px;border-radius:50%;background:var(--c);color:var(--onaccent);display:grid;place-items:center;font-size:20px}
+.step .ar{font-size:19px;color:var(--muted);font-weight:700}
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.word{background:var(--surface);border:2px solid var(--border);border-top:6px solid var(--c);border-radius:var(--radius-m);padding:14px 16px;position:relative}
+.word .ic{font-size:34px;line-height:1.1}
+.word .t{font-size:19px;font-weight:700;margin:6px 0 0;line-height:1.25;padding-right:34px}
+.word .ar{display:block;color:var(--c);font-size:17px;margin:2px 0 6px}
+.word p{margin:6px 0 0;font-size:15.5px}
+.say{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);cursor:pointer;font-size:16px;display:grid;place-items:center}
+.say:hover{border-color:var(--c,var(--t1))}
+.facts{margin-top:16px;background:var(--hintsoft);border:2px dashed var(--hint);border-radius:var(--radius-m);padding:14px 18px}
+.facts h4{margin:0 0 6px;font-size:17px;color:var(--hint)}
+.facts ul{margin:0;padding-left:20px}
+.facts li{margin:5px 0}
+
+/* sims */
+.sim{background:var(--surface);border:2px solid var(--border);border-radius:var(--radius-l);padding:18px 20px;margin-bottom:16px}
+.sim h3{margin:0 0 4px;font-size:21px}
+.sim > p{margin:0 0 12px}
+.seg{display:inline-flex;flex-wrap:wrap;gap:6px;background:var(--surface2);border:1px solid var(--border);border-radius:999px;padding:4px;margin:4px 0 10px}
+.seg button{border:0;background:none;padding:8px 14px;border-radius:999px;cursor:pointer;font-weight:600;font-size:14.5px}
+.seg button.on{background:var(--c,var(--t1));color:var(--onaccent)}
+.svgwrap{overflow-x:auto;border-radius:var(--radius-m);background:var(--surface2);border:1px solid var(--border)}
+.svgwrap svg{display:block;width:100%;min-width:500px;height:auto}
+.svt{fill:var(--ink);font-family:'Lexend',sans-serif;paint-order:stroke;stroke:var(--surface2);stroke-width:5px;stroke-linejoin:round}
+.svm{fill:var(--muted);font-family:'Lexend',sans-serif}
+.wire{stroke:var(--wire);stroke-width:4;stroke-linecap:round}
+.msg{margin-top:12px;padding:12px 16px;border-radius:var(--radius-m);background:var(--surface2);border:1px solid var(--border);min-height:50px}
+.msg.good{background:var(--oksoft);border-color:var(--ok)}
+.msg.bad{background:var(--badsoft);border-color:var(--bad)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.mini{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-m);padding:14px}
+.mini h4{margin:0 0 6px;font-size:17px}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-weight:600;cursor:pointer;background:var(--surface2);border:2px solid var(--border);border-radius:999px;padding:7px 14px;margin:4px 0 10px}
+.toggle input{width:20px;height:20px;accent-color:var(--bad)}
+canvas{display:block;width:100%;border-radius:var(--radius-m);background:var(--surface2);border:1px solid var(--border)}
+
+/* binary */
+.bulbs{display:flex;justify-content:center;gap:clamp(6px,2vw,18px);margin:10px 0;flex-wrap:nowrap}
+.bcol{border:2px solid var(--border);background:var(--surface2);border-radius:var(--radius-m);padding:10px 8px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:62px;transition:border-color .2s}
+.bcol .pv{font-size:22px;font-weight:800;color:var(--t1)}
+.bcol .bulb{margin-bottom:10px;width:46px;height:46px;border-radius:50% 50% 45% 45%;background:var(--border);position:relative;transition:background .25s,box-shadow .25s}
+.bcol .bulb::after{content:"";position:absolute;left:14px;right:14px;bottom:-9px;height:10px;border-radius:0 0 4px 4px;background:var(--wire)}
+.bcol .bit{font-size:28px;font-weight:800;line-height:1}
+.bcol.on{border-color:var(--bulb)}
+.bcol.on .bulb{background:var(--bulb);box-shadow:0 0 22px 6px color-mix(in srgb,var(--bulb) 60%,transparent)}
+.eq{text-align:center;font-size:20px;margin:8px 0 4px;min-height:34px}
+.eq .big{font-size:30px;color:var(--t1)}
+.big{font-size:26px;font-weight:800}
+.dec{width:90px;font:inherit;font-size:18px;padding:6px 10px;border-radius:10px;border:2px solid var(--border);background:var(--surface);color:var(--ink)}
+.stepsol{margin:10px 0 0;padding-left:22px;font-size:15px}
+.stepsol li{margin:3px 0;animation:pop .3s ease}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* units chart */
+.bits8{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.bits8 i{width:30px;height:30px;border-radius:6px;background:var(--t1soft);border:2px solid var(--t1);display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:700}
+.bytebox{border:3px solid var(--t2);border-radius:12px;padding:6px;display:inline-flex;gap:4px;margin-left:6px}
+.chart{display:flex;align-items:flex-end;gap:16px;height:220px;padding:10px 10px 0;border-bottom:3px solid var(--border);margin-top:8px}
+.chart .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px}
+.chart .colbar{width:100%;max-width:90px;background:var(--t1);border-radius:10px 10px 0 0;transition:height .7s cubic-bezier(.3,1.3,.5,1)}
+.chart .col.win .colbar{background:var(--ok)}
+.chart .val{font-weight:700;font-size:15px;text-align:center}
+.chart-labels{display:flex;gap:16px;padding:6px 10px 0}
+.chart-labels span{flex:1;text-align:center;font-weight:600;font-size:14px}
+.range{width:100%;accent-color:var(--t1)}
+.readout{display:grid;grid-template-columns:auto 1fr auto;gap:8px 12px;align-items:center;margin-top:10px;font-size:15px}
+.readout .bar{height:16px}
+
+/* quiz */
+.quiz{background:var(--surface);border:3px solid var(--c);border-radius:var(--radius-l);padding:20px;position:relative;overflow:hidden}
+.qtop{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:14px;font-weight:600;color:var(--muted)}
+.qtop .tag{background:var(--csoft);color:var(--c);padding:3px 10px;border-radius:999px}
+.qtop .bar{flex:1;min-width:120px}
+.qtext{font-size:20px;font-weight:600;margin:14px 0 6px;line-height:1.45}
+.qtext table{border-collapse:collapse;margin:10px 0;font-size:16px;font-weight:500}
+.qtext td,.qtext th{border:1px solid var(--border);padding:6px 14px}
+.qtext th{background:var(--surface2)}
+.qtext ul{font-weight:500;font-size:17px}
+.qsay{background:var(--surface2);border:1px solid var(--border);border-radius:999px;padding:5px 12px;cursor:pointer;font-size:14px;font-weight:600}
+.opts{display:grid;gap:10px;margin-top:14px}
+.opt{display:flex;gap:12px;align-items:center;text-align:left;cursor:pointer;background:var(--surface2);border:2px solid var(--border);border-radius:var(--radius-m);padding:12px 14px;font-size:16.5px;transition:border-color .15s,transform .1s}
+.opt:hover:not(:disabled){border-color:var(--c);transform:translateX(3px)}
+.opt .letter{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--surface);border:2px solid var(--border)}
+.opt.wrong{background:var(--badsoft);border-color:var(--bad);opacity:.75;cursor:not-allowed}
+.opt.wrong .letter{background:var(--bad);color:var(--onaccent);border-color:var(--bad)}
+.opt.right{background:var(--oksoft);border-color:var(--ok);opacity:1}
+.opt.right .letter{background:var(--ok);color:var(--onaccent);border-color:var(--ok)}
+.opt:disabled{cursor:default}
+.opt.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+.fb{margin-top:14px}
+.fbox{border-radius:var(--radius-m);padding:14px 16px;animation:pop .3s ease}
+.fbox p{margin:6px 0}
+.fbox.bad{background:var(--hintsoft);border:2px solid var(--hint)}
+.fbox.good{background:var(--oksoft);border:2px solid var(--ok)}
+.fbox .ttl{font-size:18px;font-weight:700}
+.fbox mark{background:var(--bulb);color:#1b2b4b;padding:0 5px;border-radius:5px}
+.tries{font-size:13px;color:var(--muted);margin-top:4px}
+.burst{position:absolute;pointer-events:none;font-size:26px;animation:burst 1s ease-out forwards}
+@keyframes burst{from{opacity:1;transform:translate(0,0) scale(.6)}to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.2)}}
+.result{text-align:center;padding:10px}
+.result .stars{font-size:46px;letter-spacing:6px}
+.result h3{font-size:26px;margin:6px 0}
+.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.next-sec{display:flex;justify-content:space-between;gap:10px;margin-top:30px;flex-wrap:wrap}
+
+/* vision */
+.vbtns{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.vbtns button{border:2px solid var(--border);background:var(--surface2);border-radius:var(--radius-s);padding:8px 12px;cursor:pointer;font-weight:600;font-size:14.5px}
+.vbtns button.on{border-color:var(--t2);background:var(--t2soft);color:var(--t2)}
+.ocrbox{font-family:'Lexend',monospace;font-size:22px;font-weight:700;letter-spacing:.12em;background:var(--surface);border:2px solid var(--t2);border-radius:10px;padding:6px 12px;display:inline-block;min-width:220px}
+.thumbs{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.thumbs div{text-align:center;font-size:13px;font-weight:700}
+
+/* language flow */
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:center;margin-top:12px}
+.fnode{background:var(--surface2);border:2px solid var(--border);border-radius:var(--radius-m);padding:12px;min-height:110px;display:flex;flex-direction:column;justify-content:center;gap:4px;text-align:center;opacity:.35;transition:opacity .4s,border-color .4s}
+.fnode.live{opacity:1;border-color:var(--t2)}
+.fnode small{color:var(--muted);font-weight:600}
+.farrow{font-size:28px;color:var(--muted)}
+.ai-think{animation:think .8s ease-in-out infinite alternate}
+@keyframes think{from{transform:scale(1)}to{transform:scale(1.15)}}
+.choices{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.choice{border:2px solid var(--border);background:var(--surface2);border-radius:var(--radius-m);padding:12px;cursor:pointer;text-align:left;font-size:15px;font-weight:600}
+.choice .e{font-size:30px;display:block}
+.choice.on{border-color:var(--t2);background:var(--t2soft)}
+.sortcard{font-size:19px;font-weight:600;background:var(--surface2);border:2px solid var(--border);border-radius:var(--radius-m);padding:18px;text-align:center;margin:10px 0}
+
+/* prompt builder */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.chip{border:2px solid var(--border);background:var(--surface2);border-radius:999px;padding:8px 14px;cursor:pointer;font-weight:600;font-size:14.5px}
+.chip.on{border-color:var(--t2);background:var(--t2);color:var(--onaccent)}
+.promptbox{background:var(--surface2);border:2px dashed var(--t2);border-radius:var(--radius-m);padding:12px 14px;min-height:60px;font-size:15.5px}
+.promptbox span{border-radius:5px;padding:0 2px}
+.meter{display:flex;gap:4px;margin:8px 0}
+.meter i{flex:1;height:12px;border-radius:999px;background:var(--surface2);border:1px solid var(--border)}
+.meter i.on{background:var(--ok);border-color:var(--ok)}
+.aiout{background:var(--surface);border:2px solid var(--border);border-radius:var(--radius-m);padding:12px 14px;min-height:90px;font-size:15.5px}
+.aiout ul{margin:4px 0;padding-left:20px}
+.chatcol{display:flex;flex-direction:column;gap:8px}
+.bub{max-width:88%;padding:8px 12px;border-radius:14px;font-size:14.5px}
+.bub.u{align-self:flex-end;background:var(--t1);color:var(--onaccent);border-bottom-right-radius:4px}
+.bub.a{align-self:flex-start;background:var(--surface);border:1px solid var(--border);border-bottom-left-radius:4px}
+.bub.fade{opacity:.28}
+.gap{align-self:center;font-size:13px;color:var(--muted);font-weight:600}
+.shot{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0}
+.shot .tile{background:var(--surface);border:2px solid var(--border);border-radius:10px;padding:6px 10px;font-size:14px;font-weight:600}
+.shot .tile.ex{border-color:var(--t2);background:var(--t2soft)}
+
+/* fact check */
+.fc{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fc .mini{display:flex;flex-direction:column;gap:8px}
+.policy{background:var(--surface);border:2px solid var(--t1);border-radius:10px;padding:8px 12px;font-size:14.5px}
+.strike{text-decoration:line-through;color:var(--bad);font-weight:700}
+.fix{color:var(--ok);font-weight:700}
+.spinner{display:inline-block;width:18px;height:18px;border:3px solid var(--border);border-top-color:var(--t2);border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@keyframes ripple{from{transform:scale(.15);opacity:.9}to{transform:scale(1);opacity:0}}
+.ripple{transform-box:fill-box;transform-origin:center;animation:ripple 2.2s ease-out infinite}
+.ripple.d2{animation-delay:.73s}.ripple.d3{animation-delay:1.46s}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr}
+  .row2,.fc{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr;}
+  .farrow{transform:rotate(90deg);justify-self:center}
+  .shead{flex-direction:column;align-items:flex-start}
+  .brand small{display:none}
+  .pill-progress{display:none}
+  body{font-size:16px}
+  .qtext{font-size:18px}
+  .bcol{min-width:52px;padding:8px 4px}
+  .bcol .bulb{width:36px;height:36px}
+  .bcol .bulb::after{left:10px;right:10px}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body class="show-ar">
+<header class="top"><div class="top-in">
+  <button class="brand" data-go="" aria-label="Go to home">
+    <span class="logo"><i style="background:#1c75bc">A</i><i style="background:#39b54a">T</i><i style="background:#1b3a6b">S</i></span>
+    <span>CSC40 Milestone 3<small>Visual review &amp; practice</small></span>
+  </button>
+  <span class="sp"></span>
+  <span class="pill-progress" id="gprog"></span>
+  <button class="tbtn" id="arBtn" aria-pressed="true" title="Show Arabic translations of key words">ع Arabic help</button>
+  <button class="tbtn" data-go="" aria-label="Home">🏠</button>
+</div></header>
+<main id="app"></main>
+<script>
+const TOPICS = {
+  1: {title:'Computing Systems & Networks', ar:'أنظمة الحوسبة والشبكات', c:'var(--t1)', soft:'var(--t1soft)', pcs:'PC1.1 – PC1.8'},
+  2: {title:'Modern AI', ar:'الذكاء الاصطناعي الحديث', c:'var(--t2)', soft:'var(--t2soft)', pcs:'PC2.1 – PC2.7'}
+};
+
+const SECTIONS = [
+{ id:'binary', topic:1, icon:'💡', title:'Binary numbers', ar:'الأعداد الثنائية',
+  short:'0 and 1: the language of computers.',
+  intro:'Computers only understand two states: ON (1) and OFF (0). We use place values to change binary into decimal, and decimal into binary.',
+  words:[
+    {i:'🔢', t:'Binary', ar:'النظام الثنائي', d:'A number system with only <b>two digits: 0 and 1</b>. Computers use binary.'},
+    {i:'💡', t:'0 = OFF, 1 = ON', ar:'٠ = مطفأ ، ١ = مضاء', d:'Inside a computer, each 1 is like a light that is <b>ON</b>. Each 0 is <b>OFF</b>.'},
+    {i:'🔟', t:'Decimal', ar:'النظام العشري', d:'The normal numbers we use every day. It has <b>10 digits: 0 to 9</b>.'},
+    {i:'🧱', t:'Bit', ar:'بِت', d:'<b>One</b> binary digit (0 or 1). A “4-bit” number has 4 digits. A “5-bit” number has 5 digits.'},
+    {i:'📍', t:'Place value', ar:'القيمة المكانية', d:'Each position has a value. From the <b>right</b>: 1, 2, 4, 8, 16… Each one is <b>double</b> the one before.'}
+  ],
+  facts:[
+    '<b>Binary ➜ decimal:</b> write the place values above the digits. <b>Add</b> the values that have a 1 under them. <span class="code">1011</span> = 8 + 0 + 2 + 1 = <b>11</b>',
+    '<b>Decimal ➜ binary:</b> start with the <b>biggest</b> place value that fits. Subtract. Continue to the right. 22 = 16 + 4 + 2 ➜ <span class="code">10110</span>',
+    '<b>Check your answer:</b> change it back to decimal. Is it the same number? ✅'
+  ],
+  sims:['binary'] },
+
+{ id:'connections', topic:1, icon:'🔌', title:'Wired & wireless connections', ar:'الاتصالات السلكية واللاسلكية',
+  short:'Wi-Fi, Bluetooth, copper and fiber-optic cables.',
+  intro:'Devices connect with cables (wired) or through the air (wireless). Different cables carry data in different ways: electricity or light.',
+  words:[
+    {i:'🔌', t:'Wired connection', ar:'اتصال سلكي', d:'Data travels through a <b>cable</b>.'},
+    {i:'📶', t:'Wireless connection', ar:'اتصال لاسلكي', d:'<b>No cable.</b> Data travels through the air with radio waves.'},
+    {i:'🛜', t:'Wi-Fi', ar:'واي فاي', d:'Wireless network for <b>many devices</b> in a home, school or office (laptops, phones).'},
+    {i:'🎧', t:'Bluetooth', ar:'بلوتوث', d:'Wireless for a <b>very short distance</b>, usually between 2 devices (phone + headphones). Not for an office network.'},
+    {i:'🟠', t:'Copper cable', ar:'كابل نحاسي', d:'Ethernet, coaxial and telephone cables. They carry data as <b>electrical signals</b>.'},
+    {i:'🔦', t:'Fiber-optic cable', ar:'كابل الألياف الضوئية', d:'Thin glass that carries data as <b>pulses of light</b>. Fast, long distances, and <b>not affected</b> by electrical interference.'},
+    {i:'⚡', t:'Electromagnetic interference', ar:'التداخل الكهرومغناطيسي', d:'Electrical “noise” from big machines and motors. It <b>disturbs copper</b> cables. It does not disturb light.'}
+  ],
+  facts:[
+    '“Without cables” ➜ wireless. For many laptops in an office ➜ <b>Wi-Fi</b>.',
+    '“Pulses of light” ➜ <b>fiber-optic</b> cable.',
+    '“Long distance” + “electrical interference” ➜ <b>fiber-optic</b> cable.'
+  ],
+  sims:['wireless','cables'] },
+
+{ id:'speed', topic:1, icon:'🚀', title:'Network speed', ar:'سرعة الشبكة',
+  short:'Mbps, Gbps, bandwidth and throughput.',
+  intro:'Network speed tells us how much data moves each second. Bandwidth is what the connection CAN carry. Throughput is what REALLY moved.',
+  words:[
+    {i:'🧱', t:'Bit (b) and Byte (B)', ar:'بِت و بايت', d:'<b>8 bits = 1 Byte.</b> Small <b>b</b> means bits. Big <b>B</b> means Bytes.'},
+    {i:'⏱️', t:'Mbps', ar:'ميغابت في الثانية', d:'<b>Mega-bits per second.</b> How many million bits are <b>sent each second</b>. It measures <b>speed</b>, not storage.'},
+    {i:'🚀', t:'Gbps', ar:'غيغابت في الثانية', d:'Giga-bits per second. <b>1 Gbps = 1,000 Mbps.</b>'},
+    {i:'🛣️', t:'Bandwidth', ar:'عرض النطاق الترددي', d:'The <b>maximum</b> data a connection <b>can</b> carry. Its <b>capacity</b>. Like the <b>size of a pipe</b>.'},
+    {i:'💧', t:'Throughput', ar:'الإنتاجية (معدل النقل الفعلي)', d:'The <b>actual</b> data that really moved in a test. Like the <b>water really flowing</b>. Usually lower than bandwidth.'}
+  ],
+  facts:[
+    'Memory trick: <b>B</b>andwidth = <b>B</b>iggest possible. <b>Th</b>roughput = <b>th</b>e real result.',
+    '“Capacity”, “maximum”, “advertised” ➜ <b>bandwidth</b>. “Actual”, “measured”, “during the test” ➜ <b>throughput</b>.',
+    'To compare speeds, change everything to the <b>same unit</b> first: 2 Gbps = 2,000 Mbps.'
+  ],
+  sims:['pipe','units'] },
+
+{ id:'models', topic:1, icon:'🖥️', title:'Client-server & peer-to-peer', ar:'نموذج العميل والخادم ونموذج الند للند',
+  short:'Who gives the service, and who asks for it?',
+  intro:'In some networks, one central computer (the server) gives services to the others. In other networks, all computers are equal and share directly.',
+  words:[
+    {i:'🗄️', t:'Server', ar:'الخادم', d:'A <b>central</b> computer that gives a <b>service</b> to other computers (shared files, printing).'},
+    {i:'💻', t:'Client', ar:'العميل', d:'A computer that <b>requests</b> (asks for) a service from the server.'},
+    {i:'🏢', t:'Client-server model', ar:'نموذج العميل والخادم', d:'Clients request ➜ the server manages the service <b>centrally</b>. If the server fails, that service <b>stops</b>.'},
+    {i:'🤝', t:'Peer-to-peer (P2P)', ar:'نموذج الند للند', d:'All computers are <b>equal</b>. They share files <b>directly</b> with each other. <b>No central server.</b>'},
+    {i:'🛎️', t:'Service', ar:'خدمة', d:'A job one computer does for others, like <b>printing</b> or <b>sharing files</b>.'}
+  ],
+  facts:[
+    '“Central computer”, “request”, “file server” ➜ <b>client-server</b>.',
+    '“Directly from their own computers”, “without a server” ➜ <b>peer-to-peer</b>.',
+    'Server fails ➜ the computers still turn on, but the <b>shared service</b> stops.'
+  ],
+  sims:['models'] },
+
+{ id:'topology', topic:1, icon:'🕸️', title:'Topologies & the switch', ar:'مخططات الشبكة والمبدّل',
+  short:'Star, bus, ring, mesh — and what a switch does.',
+  intro:'A topology is the shape of a network. The shape decides what happens when one cable breaks.',
+  words:[
+    {i:'🗺️', t:'Topology', ar:'مخطط (طوبولوجيا) الشبكة', d:'The <b>shape</b> of how devices are connected.'},
+    {i:'⭐', t:'Star', ar:'النجمية', d:'Every computer has its <b>own cable</b> to a <b>central switch</b>. One cable breaks ➜ <b>only that computer</b> is affected.'},
+    {i:'➖', t:'Bus', ar:'الخطية (الناقل)', d:'All computers share <b>one main cable</b>. The main cable breaks ➜ the whole network stops.'},
+    {i:'⭕', t:'Ring', ar:'الحلقية', d:'Computers are connected in a <b>circle</b>. One break can stop the ring.'},
+    {i:'🕸️', t:'Mesh', ar:'الشبكية', d:'<b>Many</b> connections between devices. If one breaks, data takes another path.'},
+    {i:'🔀', t:'Switch', ar:'المبدّل (سويتش)', d:'Connects devices in a <b>local network</b> and sends data <b>only to the correct device</b>. It does <b>not</b> store files.'},
+    {i:'🏫', t:'LAN', ar:'الشبكة المحلية', d:'Local Area Network: a network in <b>one place</b>, like a school, office or home.'}
+  ],
+  facts:[
+    '“Own cable to a central switch” + “a break affects only one computer” ➜ <b>star</b>.',
+    'A switch <b>forwards</b> data to the right computer. It does not store, print or create anything.'
+  ],
+  sims:['topology'] },
+
+{ id:'vision', topic:2, icon:'👁️', title:'Computer vision', ar:'الرؤية الحاسوبية',
+  short:'How AI looks at pictures.',
+  intro:'A camera only takes pictures. Computer vision is the AI that analyses the pictures. There are different techniques for different jobs.',
+  words:[
+    {i:'👁️', t:'Computer vision', ar:'الرؤية الحاسوبية', d:'AI that <b>looks at images</b> and understands what is in them. A camera <b>takes</b> pictures; computer vision <b>analyses</b> them.'},
+    {i:'🏷️', t:'Image classification', ar:'تصنيف الصور', d:'Gives <b>ONE label</b> to the <b>WHOLE</b> image, from fixed (predefined) categories. Example: damaged / not damaged.'},
+    {i:'🔲', t:'Object detection', ar:'اكتشاف الأجسام', d:'Finds <b>EACH object</b> and draws a <b>box</b> around it. It shows <b>WHERE</b> each object is.'},
+    {i:'🎨', t:'Image segmentation', ar:'تجزئة الصورة', d:'Colors the exact <b>pixels</b> of an object and separates it from the <b>background</b>.'},
+    {i:'🔤', t:'OCR (Optical Character Recognition)', ar:'التعرف الضوئي على الحروف', d:'<b>Reads printed text</b> in a picture and turns it into real text you can search or copy.'},
+    {i:'🔍', t:'Similarity search', ar:'البحث عن التشابه', d:'Finds other images that <b>look similar</b>.'}
+  ],
+  facts:[
+    'ONE label for the whole image ➜ <b>classification</b>.',
+    'EACH object + WHERE it is ➜ <b>object detection</b>.',
+    'Exact PIXELS / how much area ➜ <b>segmentation</b>.',
+    'READ printed letters or numbers ➜ <b>OCR</b>.',
+    'Images that LOOK alike ➜ <b>similarity search</b>.'
+  ],
+  sims:['vision'] },
+
+{ id:'language', topic:2, icon:'🗣️', title:'Language AI & generative AI', ar:'ذكاء اللغة والذكاء التوليدي',
+  short:'Translate, recognise speech, or create something new.',
+  intro:'Some AI tools change information from one form to another. Generative AI creates completely new content.',
+  words:[
+    {i:'🌍', t:'Machine translation', ar:'الترجمة الآلية', d:'Changes <b>written text</b> from one language to another (Arabic ➜ English).'},
+    {i:'🎤', t:'Speech recognition', ar:'التعرف على الكلام', d:'Changes <b>spoken words</b> (sound) into text.'},
+    {i:'✨', t:'Generative AI', ar:'الذكاء الاصطناعي التوليدي', d:'AI that <b>creates NEW content</b>: text, images, music. Examples: ChatGPT, Gemini.'},
+    {i:'💬', t:'Chatbot', ar:'روبوت المحادثة', d:'An AI program you <b>chat</b> with by typing.'},
+    {i:'🔍', t:'Non-generative AI', ar:'ذكاء اصطناعي غير توليدي', d:'AI that <b>finds, sorts or labels</b> things that already exist. It does not create new content.'}
+  ],
+  facts:[
+    'Look at the INPUT: written text ➜ <b>translation</b>. Spoken words ➜ <b>speech recognition</b>. Photo of text ➜ <b>OCR</b>.',
+    'Does the tool make something <b>NEW</b>? Yes ➜ <b>generative AI</b>.'
+  ],
+  sims:['langflow','sortgen'] },
+
+{ id:'prompts', topic:2, icon:'✍️', title:'Writing good prompts', ar:'كتابة أوامر جيدة',
+  short:'Task, context, format, role and examples.',
+  intro:'A chatbot only knows what you tell it. A clear prompt with the right pieces gives you the answer you need.',
+  words:[
+    {i:'✍️', t:'Prompt', ar:'الموجِّه (الأمر)', d:'The <b>instruction</b> you write to a chatbot.'},
+    {i:'🎯', t:'Task', ar:'المهمة', d:'Say <b>exactly what you want</b>: “Write…”, “Summarise…”, “Respond…”.'},
+    {i:'🎭', t:'Role', ar:'الدور', d:'Tell the AI <b>who to be</b>: “Act as a polite hotel customer-service agent.”'},
+    {i:'📐', t:'Format', ar:'الشكل', d:'Say the <b>shape</b> of the answer: a table with columns, 3 bullet points, 5 numbered steps.'},
+    {i:'📎', t:'Context', ar:'السياق', d:'Give the <b>information</b> the AI needs: paste the latest update, upload the PDF. The AI can’t know what you didn’t give it.'},
+    {i:'🧩', t:'Few-shot prompting', ar:'التلقين بأمثلة قليلة', d:'Give the AI <b>a few examples</b> so it copies the style. (Zero-shot = no examples.)'}
+  ],
+  facts:[
+    'A good prompt = <b>Task + Context + Format</b> (+ Role, + Examples).',
+    'In a long chat, the AI may <b>forget</b> early instructions ➜ write <b>one complete new prompt</b> with the information and the format.',
+    'Need a summary of a file? <b>Upload the file</b> first. Never ask the AI to invent the contents.'
+  ],
+  sims:['prompt','tricks'] },
+
+{ id:'limits', topic:2, icon:'⚠️', title:'AI limitations', ar:'حدود الذكاء الاصطناعي',
+  short:'Hallucinations, forgetting, and why humans must check.',
+  intro:'AI is powerful, but it can be wrong and still sound sure. Smart users check important answers.',
+  words:[
+    {i:'🌀', t:'Hallucination', ar:'الهلوسة', d:'The AI <b>makes up false information</b> and says it <b>confidently</b>. Example: a research article that does not exist.'},
+    {i:'🧠', t:'Memory limitation', ar:'حدود الذاكرة', d:'In very long chats, the AI may <b>forget</b> instructions from the beginning.'},
+    {i:'👩‍💼', t:'Human check', ar:'المراجعة البشرية', d:'A person <b>checks the AI’s answer</b> against real sources (like company policy) before sending it.'},
+    {i:'⚖️', t:'Confident ≠ correct', ar:'الثقة لا تعني الصحة', d:'A confident, long or friendly answer can still be <b>wrong</b>.'}
+  ],
+  facts:[
+    'Always check facts, sources and numbers that come from AI.',
+    'For important answers (policies, prices, warranties), a <b>person must check</b> before sending.'
+  ],
+  sims:['factcheck'] }
+];
+
+/* Questions: o = options in original order, a = index of correct option,
+   why = feedback for each wrong option, h = hint, key = key words, ex = explanation */
+const QUESTIONS = [
+/* ---------- binary ---------- */
+{id:'Q1', sec:'binary', q:'Machines deal with binary numbers. What is the decimal value of <span class="code">1011</span>?',
+ o:['3','10','11','7'], a:2,
+ why:{0:'3 is only the number of 1s. We add place values, not count the 1s.',1:'Close! Check again: 8 + 0 + 2 + 1 = ?',3:'7 is <span class="code">0111</span>. Our number has a 1 in the 8 place.'},
+ h:'Write the place values <b>8 4 2 1</b> above the digits 1 0 1 1. Add only the values with a 1 under them.', key:'8 4 2 1',
+ ex:'<span class="code">1011</span> ➜ 8 + 0 + 2 + 1 = <b>11</b>'},
+{id:'Q11', sec:'binary', q:'A smart warehouse uses a <b>five-bit</b> binary code to record the status of a conveyor belt. The control system receives the decimal status value <b>22</b>. Which binary code should the system store?',
+ o:['<span class="code">10110</span>','<span class="code">11010</span>','<span class="code">10101</span>','<span class="code">10010</span>'], a:0,
+ why:{1:'11010 = 16 + 8 + 2 = 26. Too big!',2:'10101 = 16 + 4 + 1 = 21. Only 1 less — very close!',3:'10010 = 16 + 2 = 18. The 4 is missing.'},
+ h:'Five bits have the place values <b>16 8 4 2 1</b>. Which values add up to 22? Start with 16.', key:'22 = 16 + 4 + 2',
+ ex:'22 = 16 + 4 + 2 ➜ <span class="code">10110</span>'},
+{id:'Q19', sec:'binary', q:'A warehouse sensor stores its status as a <b>four-bit</b> binary number. The status value is <b>9 in decimal</b>. Which binary code represents this value?',
+ o:['<span class="code">0110</span>','<span class="code">1001</span>','<span class="code">1010</span>','<span class="code">1100</span>'], a:1,
+ why:{0:'0110 = 4 + 2 = 6.',2:'1010 = 8 + 2 = 10.',3:'1100 = 8 + 4 = 12.'},
+ h:'Four bits: <b>8 4 2 1</b>. 9 = 8 + ?', key:'9 = 8 + 1',
+ ex:'9 = 8 + 1 ➜ <span class="code">1001</span>'},
+
+/* ---------- connections ---------- */
+{id:'Q2', sec:'connections', q:'An office needs to connect laptops <b>without cables</b>. Which connection should it use?',
+ o:['Fiber optic','Bluetooth','Wi-Fi','Ethernet'], a:2,
+ why:{0:'Fiber-optic is a <b>cable</b>.',1:'Bluetooth is wireless, but only for a <b>short distance</b> between a few devices (like headphones).',3:'Ethernet uses a <b>cable</b>.'},
+ h:'“Without cables” means <b>wireless</b>. Which wireless choice connects <b>many laptops</b> in an office?', key:'without cables + many laptops',
+ ex:'<b>Wi-Fi</b> is wireless and connects many devices in a building.'},
+{id:'Q4', sec:'connections', q:'A company needs to connect two network devices using a cable. The connection must carry data as <b>pulses of light</b>. Which cable should the technician select?',
+ o:['Copper Ethernet cable','Coaxial cable','Fiber-optic cable','Twisted-pair telephone cable'], a:2,
+ why:{0:'Copper sends <b>electrical</b> signals, not light.',1:'Coaxial cable is copper too — electrical signals.',3:'Telephone cable is copper — electricity, not light.'},
+ h:'Which cable is made of thin <b>glass</b> and carries <b>light</b>?', key:'pulses of light',
+ ex:'<b>Fiber-optic</b> cable carries data as pulses of light.'},
+{id:'Q14', sec:'connections', q:'A factory needs to connect two network devices across a <b>long building</b>. The cable will pass near machines that cause <b>electrical interference</b>. Which connection is the most suitable?',
+ o:['Copper Ethernet cable, because electrical interference improves its signal.','Copper audio cable, because it is designed for long-distance network data.','Fiber-optic cable, because it carries data using light and is not affected by electromagnetic interference.','USB charging cable, because it connects any two network devices over long distances.'], a:2,
+ why:{0:'Interference makes copper signals <b>worse</b>, not better.',1:'Audio cables are for <b>sound</b>, not network data.',3:'USB charging cables are short and are not for network connections.'},
+ h:'Interference disturbs <b>electrical</b> signals. Which cable does <b>not</b> use electricity to carry data?', key:'interference ➜ use light',
+ ex:'<b>Fiber-optic</b> uses light, so electrical interference cannot disturb it. It also works over long distances.'},
+
+/* ---------- speed ---------- */
+{id:'Q5', sec:'speed', q:'An internet package advertises a speed of <b>100 Mbps</b>. What does the unit describe?',
+ o:['The number of megabytes stored by the router each second.','The number of devices that can connect to the network.','The amount of storage available on each connected device.','The number of megabits that can be transmitted per second.'], a:3,
+ why:{0:'Small <b>b</b> means bits, and Mbps is about <b>sending</b>, not storing.',1:'The number of devices is not measured in Mbps.',2:'Storage is measured in GB or TB, not Mbps.'},
+ h:'Break the unit into pieces: <b>M</b> = mega, <b>b</b> = bits, <b>ps</b> = per second. Is it about storage or speed?', key:'M-b-p-s = mega-bits per second',
+ ex:'Mbps = <b>megabits per second</b>: how much data is sent each second.'},
+{id:'Q10', sec:'speed', q:'A company compares two connections:<ul><li><b>Link A:</b> bandwidth 100 Mbps; measured throughput 35 Mbps.</li><li><b>Link B:</b> bandwidth 60 Mbps; measured throughput 50 Mbps.</li></ul>Which conclusion is supported by these measurements?',
+ o:['Link A has the higher capacity, while Link B transferred data faster during the test.','Link A has both the higher capacity and the higher measured transfer rate.','Link B has the higher capacity, while Link A transferred data faster during the test.','Both links transferred data at their maximum stated capacity.'], a:0,
+ why:{1:'Check the throughput: A = 35, B = 50. Which is bigger?',2:'Check the bandwidth: A = 100, B = 60. Which is bigger?',3:'35 is not 100, and 50 is not 60. Neither link reached its maximum.'},
+ h:'Compare two things separately. <b>Capacity = bandwidth</b> (the maximum). <b>Faster during the test = throughput</b> (the real result). Try the “Link A” and “Link B” buttons in the pipe simulator.', key:'capacity = bandwidth, test = throughput',
+ ex:'Bandwidth: A 100 &gt; B 60 ➜ A has more capacity. Throughput: B 50 &gt; A 35 ➜ B was faster in the test.'},
+{id:'Q16', sec:'speed', q:'A branch office has 50 Mbps bandwidth but only 20 Mbps <b>actual data transfer</b>. Which value is throughput?',
+ o:['50 Mbps','70 Mbps','30 Mbps','20 Mbps'], a:3,
+ why:{0:'50 Mbps is the <b>bandwidth</b> (the maximum).',1:'70 = 50 + 20. Don’t add the numbers.',2:'30 = 50 − 20. Don’t subtract the numbers.'},
+ h:'Throughput = the <b>actual</b> (real) transfer.', key:'actual data transfer',
+ ex:'Throughput is the actual transfer: <b>20 Mbps</b>.'},
+{id:'Q21', sec:'speed', q:'A technician reads a network report: bandwidth = 100 Mbps and throughput = 35 Mbps. Which conclusion is correct?',
+ o:['The measured transfer rate is lower than the connection capacity.','The bandwidth is 35 Mbps.','The throughput is 100 Mbps.','The network has no connection.'], a:0,
+ why:{1:'Read the report again: bandwidth = <b>100</b> Mbps.',2:'Read the report again: throughput = <b>35</b> Mbps.',3:'35 Mbps of data moved, so there <b>is</b> a connection.'},
+ h:'Throughput is the <b>measured</b> rate. Bandwidth is the <b>capacity</b>. Which number is smaller?', key:'35 < 100',
+ ex:'Throughput 35 &lt; bandwidth 100 ➜ the real (measured) rate is lower than the capacity. This is normal.'},
+{id:'Q21b', sec:'speed', q:'A small business compares two internet packages. One advertises <b>1 Gbps</b> and the other advertises <b>800 Mbps</b>. Assume 1 Gbps = 1,000 Mbps. How much greater is the advertised bandwidth of the first package?',
+ o:['100 Mbps','200 Mbps','800 Mbps','1,800 Mbps'], a:1,
+ why:{0:'Check the subtraction again: 1,000 − 800 = ?',2:'800 Mbps is the second package, not the difference.',3:'1,800 = 1,000 + 800. “How much greater” means <b>subtract</b>.'},
+ h:'Step 1: change 1 Gbps into Mbps. Step 2: subtract the smaller number.', key:'1,000 − 800',
+ ex:'1 Gbps = 1,000 Mbps ➜ 1,000 − 800 = <b>200 Mbps</b>'},
+{id:'Q29', sec:'speed', q:'A technician compares the advertised network connection speeds of four devices.<table><tr><th>Device</th><th>Connection speed</th></tr><tr><td>iPhone</td><td>500 Mbps</td></tr><tr><td>iPad</td><td>1 Gbps</td></tr><tr><td>Chromebook</td><td>800 Mbps</td></tr><tr><td>Laptop</td><td>2 Gbps</td></tr></table>Assume 1 Gbps = 1,000 Mbps. Which device has the highest connection speed?',
+ o:['iPhone','iPad','Chromebook','Laptop'], a:3,
+ why:{0:'500 Mbps is the <b>slowest</b> one.',1:'1 Gbps = 1,000 Mbps. Is there something bigger?',2:'800 looks big, but it is <b>Mbps</b>. Change the Gbps values into Mbps.'},
+ h:'Change everything to Mbps first: 1 Gbps = 1,000 Mbps, 2 Gbps = 2,000 Mbps. The bar chart in step 2 shows this trap.', key:'2 Gbps = 2,000 Mbps',
+ ex:'iPhone 500, iPad 1,000, Chromebook 800, Laptop <b>2,000 Mbps</b> ➜ the laptop is the fastest.'},
+
+/* ---------- models ---------- */
+{id:'Q6', sec:'models', q:'A small office wants employees to send print jobs to a <b>central computer that manages a shared printer</b>. The employee computers request the printing service when needed. Which network model best provides the solution of this arrangement?',
+ o:['Client-server, because computers request a service managed centrally.','Peer-to-peer, because every computer manages the same central service.','Peer-to-peer, because no device provides a service to another device.','Client-server, because every computer must have its own printer.'], a:0,
+ why:{1:'In peer-to-peer there is <b>no central</b> service.',2:'Here one device <b>does</b> give a service (printing) to the others.',3:'The office shares <b>ONE</b> printer. Each computer does not need its own.'},
+ h:'There is <b>one central computer</b>, and the other computers <b>request</b> a service. Which model has a central manager?', key:'central computer + request',
+ ex:'<b>Client-server:</b> clients request ➜ the central server manages the printing.'},
+{id:'Q17', sec:'models', q:'A company stores shared files on a <b>central file server</b>. Employees can still log in to their computers, but they cannot open the shared files after the file server fails. What is the best explanation?',
+ o:['The shared-file service depends on the central server.','All employee computers must use the same network cable.','Each computer independently stores the only copy of every shared file.','A file server is required only to connect computers to Wi-Fi.'], a:0,
+ why:{1:'The cable is not the problem. The <b>server</b> failed.',2:'If each computer had its own copy, the files would still open.',3:'A file server <b>stores shared files</b>. It is not for Wi-Fi.'},
+ h:'The computers still work. Only the <b>shared files</b> stopped. Where are the shared files kept? Try “Break the server” in the simulator.', key:'server fails ➜ service stops',
+ ex:'In client-server, the service lives on the server. <b>Server down ➜ shared files down.</b>'},
+{id:'Q20', sec:'models', q:'An office has ten computers. Employees want to share selected files <b>directly from their own computers</b> without using a dedicated central file server. Which network model best fits the requirement?',
+ o:['Client-server, because every file must be managed by a central server.','Peer-to-peer, because computers can share resources directly.','Client-server, because a switch is always a file server.','Peer-to-peer, because computers cannot provide resources to one another.'], a:1,
+ why:{0:'The office does <b>not</b> want a central server.',2:'A switch connects devices. It is <b>not</b> a file server.',3:'Peer-to-peer is right, but the reason is wrong. In P2P, computers <b>do</b> share with each other.'},
+ h:'“Directly from their own computers” + “without a central server”. Which model has <b>no server</b>? Also check that the <b>reason</b> is true.', key:'directly + no server',
+ ex:'<b>Peer-to-peer:</b> computers are equal and share resources directly.'},
+
+/* ---------- topology ---------- */
+{id:'Q8', sec:'topology', q:'A technician is designing a network in which each office computer has its <b>own cable to a central switch</b>. A cable failure should affect only the computer connected by that cable. Which topology meets the requirement?',
+ o:['Bus','Ring','Star','Mesh'], a:2,
+ why:{0:'In a bus, everyone shares <b>one main cable</b>. One break can stop everyone.',1:'In a ring, one break can stop the whole circle.',3:'Mesh has many links between devices, not one cable each to a central switch.'},
+ h:'Imagine the shape: a <b>center</b> with lines going out to each computer, like a ⭐. Try cutting cables in the simulator.', key:'own cable to a central switch',
+ ex:'<b>Star:</b> each computer has its own cable to the switch, so one break affects only one computer.'},
+{id:'Q23', sec:'topology', q:'An office uses a <b>switch</b> to connect five desktop computers on the same local network. Which statement best describes the switch’s main role?',
+ o:['It connects local devices and forwards data to the appropriate connected device.','It stores all the files that employees create on their computers.','It converts every electrical signal into a printed document.','It generates new images for the connected computers.'], a:0,
+ why:{1:'Files are stored on computers or servers, not on a switch.',2:'Printers print documents. A switch only moves data.',3:'Generative AI makes images. A switch only forwards data.'},
+ h:'A switch is like a <b>post office</b> in the room: it delivers each message to the right computer. Try “Send data” in the star simulator.', key:'connects + forwards data',
+ ex:'A switch <b>connects</b> local devices and <b>forwards</b> data to the correct one.'},
+
+/* ---------- vision ---------- */
+{id:'Q7', sec:'vision', q:'A warehouse AI system examines parcel images and assigns each parcel <b>one of two labels: damaged or not damaged</b>. The system does not create new images. Which description best fits the use case?',
+ o:['Generating a new parcel image from a text description.','Classifying images into predefined categories.','Translating a parcel label into another language.','Creating a new category name for each parcel.'], a:1,
+ why:{0:'The question says the system does <b>not</b> create images.',2:'There is no language translation here.',3:'The categories already exist (damaged / not damaged). It does not invent new ones.'},
+ h:'The AI chooses a label from a <b>fixed list</b>. It does not create anything new.', key:'one of two labels',
+ ex:'<b>Image classification:</b> one label from predefined categories.'},
+{id:'Q9', sec:'vision', q:'A warehouse needs an AI solution that can <b>review camera images automatically</b> and identify packages with visible damage. Which AI capability is most directly needed?',
+ o:['HD cameras to capture the package images.','A speech system that converts spoken messages into images.','A chatbot that answers questions about packages.','A computer vision system that analyses images of packages.'], a:3,
+ why:{0:'Cameras <b>capture</b> pictures, but they don’t <b>analyse</b> them. A camera is not AI.',1:'There are no spoken messages here.',2:'A chatbot talks. It doesn’t look at images.'},
+ h:'The cameras are already there. Which AI <b>understands what is in</b> the pictures?', key:'review images automatically',
+ ex:'<b>Computer vision</b> analyses images to find damage.'},
+{id:'Q18', sec:'vision', q:'A factory uses AI to inspect camera images of its production line. The system must identify <b>every</b> safety helmet in an image and show <b>where</b> each one is located. One image may contain several helmets. Which computer vision solution best meets the requirement?',
+ o:['Image classification: assign one label to the entire image indicating whether a helmet is present.','Object detection: identify each helmet and draw a bounding box around it.','Optical character recognition: read any text printed on the helmets.','Similarity search: find existing images that look similar to the camera image.'], a:1,
+ why:{0:'Classification gives <b>one label</b> for the whole image. It doesn’t show <b>where</b>.',2:'OCR reads text. We need to find helmets.',3:'Similarity search finds other images. It doesn’t locate helmets.'},
+ h:'Two needs: find <b>EACH</b> helmet and show <b>WHERE</b>. Which technique draws a box around each object?', key:'every + where',
+ ex:'<b>Object detection</b> finds each object and draws a box to show where it is.'},
+{id:'Q22', sec:'vision', q:'A warehouse wants to calculate how much of each camera image is covered by a product. The system must identify the product’s <b>pixels</b> separately from the background. Which computer vision technique is most suitable?',
+ o:['Image classification, to assign one label to the whole image.','Optical character recognition, to read printed text.','Image segmentation, to separate the product from the background.','Machine translation, to change labels between languages.'], a:2,
+ why:{0:'One label for the whole image can’t measure area.',1:'OCR reads text only.',3:'Translation is about languages, not images.'},
+ h:'We need the exact <b>pixels</b> of the product. Which technique colors the object’s pixels?', key:'pixels + background',
+ ex:'<b>Image segmentation</b> marks the product’s pixels, so you can measure how much of the image it covers.'},
+{id:'Q27', sec:'vision', q:'A warehouse camera captures images of package labels. The system must turn the <b>printed tracking numbers into text</b> that can be searched in a database. Which technique is most suitable?',
+ o:['Object detection, to draw a box around the package.','Image segmentation, to separate the package from its background.','Optical character recognition, to read the printed characters.','Similarity search, to find packages with a similar appearance.'], a:2,
+ why:{0:'A box around the package doesn’t read the numbers.',1:'Separating the package from the background doesn’t read the numbers.',3:'Similar-looking packages don’t give us the tracking number.'},
+ h:'Printed characters in a picture ➜ real text. Which technique <b>reads</b> characters?', key:'printed ➜ text',
+ ex:'<b>OCR</b> reads printed characters and turns them into searchable text.'},
+
+/* ---------- language ---------- */
+{id:'Q12', sec:'language', q:'A travel company receives a <b>written Arabic message</b> from a customer. An employee who reads English needs to understand its meaning. Which application is most suitable?',
+ o:['Speech recognition, to convert spoken Arabic into English text.','OCR, to identify text in a photograph.','Machine translation, to change the written message into English.','Image segmentation, to separate objects in a picture.'], a:2,
+ why:{0:'Speech recognition is for <b>spoken</b> words. This message is <b>written</b>.',1:'OCR reads text from a photo, but it does not change the language.',3:'Segmentation is for images, not language.'},
+ h:'The message is <b>written</b> (not spoken, not a photo). We need to <b>change the language</b>.', key:'written + another language',
+ ex:'<b>Machine translation</b> changes written Arabic into English.'},
+{id:'Q13', sec:'language', q:'An online retailer is testing four AI tools to improve its product listings. The retailer wants a tool that can <b>create a new description</b> from a list of product features. Which tool uses generative AI to meet this requirement?',
+ o:['A tool that identifies product features mentioned in existing descriptions.','A tool that assigns each existing description to a product category.','A tool that drafts a new description using the supplied product features.','A tool that searches the catalogue for descriptions containing similar words.'], a:2,
+ why:{0:'Identifying features in old text does not create anything new.',1:'Putting things in categories is classification, not generation.',3:'Searching finds existing descriptions. It doesn’t create a new one.'},
+ h:'Generative AI = <b>creates something NEW</b>. Which tool writes something new?', key:'create a new description',
+ ex:'Drafting a <b>new</b> description from features is <b>generative AI</b>.'},
+
+/* ---------- prompts ---------- */
+{id:'Q3', sec:'prompts', q:'A customer-service employee uses a chatbot to prepare a summary of a customer complaint. Early in a <b>long conversation</b>, the employee asked the chatbot to use a table with the columns <b>Issue, Action and Status</b>. The chatbot later produces a paragraph and leaves out the customer’s <b>latest update</b>. Which next prompt is most likely to produce the required summary?',
+ o:['“Rewrite your last answer as a table. Use only the information already included in that answer.”','“Using the latest customer update below, summarise the complaint in a table with the columns Issue, Action and Status: [insert update].”','“Continue the conversation and use the format I requested at the beginning.”','“Write a longer paragraph about the complaint and add a heading for the customer’s update.”'], a:1,
+ why:{0:'This uses only the old answer, so the <b>latest update is still missing</b>.',2:'The AI already forgot the beginning. Don’t depend on its memory — <b>repeat</b> the format clearly.',3:'The employee needs a <b>table</b>, not a paragraph.'},
+ h:'Two things are missing: the <b>latest update</b> (context) and the <b>table format</b>. Which prompt gives BOTH in one message?', key:'latest update + table columns',
+ ex:'One complete prompt with the <b>new information</b> and the <b>exact format</b> fixes the forgetting problem.'},
+{id:'Q15', sec:'prompts', q:'A logistics employee wants a short guide for new staff explaining how to report delayed deliveries. The guide should contain <b>five numbered steps</b>. Which prompt is most likely to produce the required response?',
+ o:['“Describe delivery services using any format in steps.”','“Write five numbered steps for new staff explaining how to report a delayed delivery.”','“List five types of delivery vehicles for experienced drivers.”','“Explain the history of logistics in five detailed paragraphs.”'], a:1,
+ why:{0:'“Any format” and “delivery services” are too general.',2:'Wrong topic (vehicles) and wrong audience (experienced drivers).',3:'Wrong topic (history) and wrong format (paragraphs).'},
+ h:'Check three things: <b>topic</b> (report delayed deliveries), <b>audience</b> (new staff), <b>format</b> (5 numbered steps). Which prompt has all three?', key:'topic + audience + format',
+ ex:'The best prompt states the task, the audience and the format clearly.'},
+{id:'Q25', sec:'prompts', q:'A hotel employee wants a chatbot to prepare a <b>polite response</b> to a guest who reported a delayed room service order. The response should contain <b>three bullet points</b>. Which prompt best meets the requirement?',
+ o:['“Act as a polite hotel customer-service agent. Respond to the guest’s delayed order in three bullet points.”','“Describe how hotels use technology in customer service in three bullet points.”','“Write a detailed report about room service without using bullet points.”','“Translate the guest’s complaint into another language without responding rudely to the guest.”'], a:0,
+ why:{1:'This is about hotel technology, not the guest’s problem.',2:'It says <b>no</b> bullet points, and a report is not a reply.',3:'A translation is not a reply to the guest.'},
+ h:'Look for: a <b>polite role</b> + <b>respond to the guest</b> + <b>three bullet points</b>. Build it in the prompt builder!', key:'role + task + format',
+ ex:'It gives a <b>role</b> (polite agent), a <b>task</b> (respond) and a <b>format</b> (three bullets).'},
+{id:'Q26', sec:'prompts', q:'A company has a <b>20-page PDF report</b> and needs a short summary of its main findings. An employee has access to ChatGPT with <b>file uploads enabled</b>. Which approach is most suitable?',
+ o:['Upload the PDF to ChatGPT and ask it to summarise the main findings.','Give ChatGPT only the report’s title and ask it to invent the findings.','Prompt ChatGPT to summarise the report without providing its contents.','Prompt ChatGPT to describe what a PDF file is.'], a:0,
+ why:{1:'Inventing findings = making things up (hallucination).',2:'Without the contents, the AI can only <b>guess</b>.',3:'This does not summarise the report.'},
+ h:'The AI can only summarise what it can <b>read</b>. How do you give it the whole report?', key:'give the AI the file (context)',
+ ex:'<b>Upload the PDF</b> so the AI has the real contents, then ask for the summary.'},
+{id:'Q30', sec:'prompts', q:'A delivery company wants a chatbot to write a new delivery update in the <b>same style</b> as its previous messages. Which prompt best uses <b>few-shot</b> prompting?',
+ o:['“Write a delivery update in any style you choose.”','“Here are two examples of our delivery updates. Use them as a guide to write a new update for an order arriving tomorrow.”','“Copy the first delivery update exactly and send it again.”','“Write one sentence explaining what a delivery update is.”'], a:1,
+ why:{0:'No examples, and “any style” is not the company style.',2:'Copying exactly does not make a <b>new</b> update.',3:'This doesn’t write an update and gives no examples.'},
+ h:'“Few-shot” = give a <b>few examples</b> (shots) for the AI to follow.', key:'a few examples',
+ ex:'Giving <b>two examples</b> to copy the style is few-shot prompting.'},
+
+/* ---------- limits ---------- */
+{id:'Q24', sec:'limits', q:'A student asks a chatbot for information about an AI project. The chatbot provides a <b>confident</b> answer and cites a research article, but the student cannot find the article because it <b>does not exist</b>. Which chatbot limitation does this example illustrate?',
+ o:['Hallucination: the chatbot generated false information and presented it as factual.','Memory limitation: the chatbot forgot an instruction from earlier in the conversation.','Machine translation: the chatbot changed information from one language to another.','Image recognition: the chatbot incorrectly identified an object in a picture.'], a:0,
+ why:{1:'The chatbot didn’t forget an instruction. It <b>invented</b> a source.',2:'No language was changed.',3:'There is no picture here.'},
+ h:'The article is <b>fake</b>, but the chatbot said it confidently. What do we call made-up AI information?', key:'made up + confident',
+ ex:'<b>Hallucination:</b> the AI invents false information and presents it as true.'},
+{id:'Q28', sec:'limits', q:'A customer-service team tests Google Gemini to help draft responses about product warranties. During testing, Gemini occasionally gives <b>confident answers that do not match the company’s warranty policy</b>. Which approach best addresses this limitation?',
+ o:['Let Gemini send every response automatically if it sounds confident.','Ask Gemini to make every response longer before sending it.','Have an employee check each warranty claim against the current company policy.','Ask Gemini to use a friendlier tone instead of checking the claim.'], a:2,
+ why:{0:'Sounding confident does <b>not</b> mean correct.',1:'A longer answer can still be wrong.',3:'A friendly tone does not fix wrong information.'},
+ h:'Confident ≠ correct. <b>Who</b> can make sure the answer matches the real policy?', key:'human check',
+ ex:'A <b>human check</b> against the real policy catches AI mistakes before customers see them.'}
+];
+
+/* ================= helpers ================= */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const NS = 'http://www.w3.org/2000/svg';
+const app = $('#app');
+function S(tag, attrs, parent, text) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text != null) e.textContent = text;
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function plain(html) { const d = document.createElement('div'); d.innerHTML = html; return d.textContent.replace(/\s+/g,' ').trim(); }
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const wait = ms => new Promise(r => setTimeout(r, ms));
+function css(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+let progress = store.get('csc40m3.progress', {});
+let showAr = store.get('csc40m3.ar', true);
+
+function speak(text) {
+  try {
+    if (!('speechSynthesis' in window)) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US'; u.rate = 0.82;
+    speechSynthesis.speak(u);
+  } catch (e) {}
+}
+document.addEventListener('click', e => {
+  const s = e.target.closest('[data-say]');
+  if (s) { speak(s.getAttribute('data-say')); return; }
+  const g = e.target.closest('[data-go]');
+  if (g) { const id = g.getAttribute('data-go'); if (location.hash.slice(1) === id) route(); else location.hash = id ? '#' + id : '#home'; }
+});
+
+/* Arabic toggle */
+const arBtn = $('#arBtn');
+function applyAr() { document.body.classList.toggle('show-ar', showAr); arBtn.setAttribute('aria-pressed', showAr ? 'true' : 'false'); }
+arBtn.addEventListener('click', () => { showAr = !showAr; store.set('csc40m3.ar', showAr); applyAr(); });
+applyAr();
+
+function solvedCount(list) { return list.filter(q => progress[q.id]).length; }
+function updateGlobal() { $('#gprog').textContent = `✅ ${solvedCount(QUESTIONS)} / ${QUESTIONS.length} solved`; }
+
+/* ================= routing ================= */
+function route() {
+  if (window.speechSynthesis) try { speechSynthesis.cancel(); } catch (e) {}
+  const id = location.hash.slice(1);
+  const sec = SECTIONS.find(s => s.id === id);
+  if (sec) renderSection(sec);
+  else if (id === 'final') renderFinal();
+  else renderHome();
+  updateGlobal();
+  window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', route);
+
+/* ================= home ================= */
+function renderHome() {
+  let html = `
+  <section class="hero">
+    <div>
+      <h1>Milestone 3: see it, try it, practise it.</h1>
+      <p>Review every topic for the CSC40 exam with pictures, simulations and practice questions.</p>
+      <p>You can try each question <b>as many times as you need</b>. Every wrong answer gives you a hint. The answers change order every time you open the page.</p>
+    </div>
+    <div class="path">
+      <div class="st"><span class="n">📖</span><div><b>1. Learn the words</b><span>Simple meanings, Arabic help and 🔊 listening.</span></div></div>
+      <div class="st"><span class="n">👀</span><div><b>2. See it work</b><span>Click, switch and play with the simulations.</span></div></div>
+      <div class="st"><span class="n">✅</span><div><b>3. Practise</b><span>Unlimited tries with friendly hints.</span></div></div>
+    </div>
+  </section>`;
+  for (const n of [1, 2]) {
+    const T = TOPICS[n];
+    html += `<div class="topic"><span class="tn" style="background:${T.c}">Topic ${n}</span><h2>${T.title}</h2><span class="ar">${T.ar}</span><span class="pcs">${T.pcs}</span></div><div class="grid">`;
+    for (const s of SECTIONS.filter(x => x.topic === n)) {
+      const qs = QUESTIONS.filter(q => q.sec === s.id); const done = solvedCount(qs);
+      html += `<button class="scard" data-go="${s.id}" style="--c:${T.c}">
+        <span class="ic">${s.icon}</span><b>${s.title}</b><span class="ar">${s.ar}</span><span class="d">${s.short}</span>
+        <span class="meta"><span>${qs.length} questions</span><span>${done === qs.length ? '🏆 Done' : done + ' solved'}</span></span>
+        <span class="bar"><i style="width:${done / qs.length * 100}%"></i></span></button>`;
+    }
+    html += `</div>`;
+  }
+  html += `<div class="final-card"><span class="ic">🏁</span><div><h3>Final mixed challenge</h3><p>All ${QUESTIONS.length} questions from both topics, in a random order.</p></div><span class="sp"></span><button class="btn light" data-go="final">Start the challenge</button></div>
+  <button class="reset" id="resetBtn">Reset my progress</button>`;
+  app.innerHTML = html;
+  $('#resetBtn').onclick = () => { if (confirm('Clear all your saved progress?')) { progress = {}; store.set('csc40m3.progress', progress); renderHome(); updateGlobal(); } };
+}
+
+/* ================= section ================= */
+function renderSection(sec) {
+  const T = TOPICS[sec.topic];
+  const qs = QUESTIONS.filter(q => q.sec === sec.id);
+  const idx = SECTIONS.indexOf(sec), prev = SECTIONS[idx - 1], next = SECTIONS[idx + 1];
+  app.style.setProperty('--c', T.c); app.style.setProperty('--csoft', T.soft);
+  app.innerHTML = `
+  <button class="link" data-go="">← All topics</button>
+  <section class="shead">
+    <span class="ic">${sec.icon}</span>
+    <div><div class="tp">Topic ${sec.topic}: ${T.title}</div><h1>${sec.title}</h1><span class="ar">${sec.ar}</span><p>${sec.intro}</p></div>
+  </section>
+  <nav class="steps-nav"><a href="#${sec.id}" data-jump="learn">📖 Learn</a><a href="#${sec.id}" data-jump="see">👀 See it</a><a href="#${sec.id}" data-jump="practice">✅ Practise (${qs.length})</a></nav>
+
+  <h2 class="step" id="learn"><span class="num">1</span>Learn the key words <span class="ar">الكلمات المهمة</span></h2>
+  <div class="words">${sec.words.map(w => `
+    <div class="word"><button class="say" data-say="${esc(w.t + '. ' + plain(w.d))}" aria-label="Listen to ${esc(w.t)}">🔊</button>
+      <div class="ic">${w.i}</div><div class="t">${w.t}</div><span class="ar">${w.ar}</span><p>${w.d}</p></div>`).join('')}
+  </div>
+  <div class="facts"><h4>🔑 Remember for the exam</h4><ul>${sec.facts.map(f => `<li>${f}</li>`).join('')}</ul></div>
+
+  <h2 class="step" id="see"><span class="num">2</span>See it work <span class="ar">شاهد كيف يعمل</span></h2>
+  <div id="sims"></div>
+
+  <h2 class="step" id="practice"><span class="num">3</span>Practise <span class="ar">تدرّب</span></h2>
+  <div id="quiz"></div>
+
+  <div class="next-sec">
+    ${prev ? `<button class="btn ghost" data-go="${prev.id}">← ${prev.icon} ${prev.title}</button>` : '<span></span>'}
+    ${next ? `<button class="btn" data-go="${next.id}">${next.icon} ${next.title} ➜</button>` : `<button class="btn" data-go="final">🏁 Final mixed challenge</button>`}
+  </div>`;
+  $$('[data-jump]', app).forEach(a => a.addEventListener('click', e => { e.preventDefault(); document.getElementById(a.dataset.jump).scrollIntoView({ behavior: 'smooth' }); }));
+  const simsEl = $('#sims');
+  sec.sims.forEach(name => { const box = document.createElement('div'); box.className = 'sim'; simsEl.appendChild(box); SIMS[name](box); });
+  startQuiz($('#quiz'), qs, { next });
+}
+
+function renderFinal() {
+  app.style.setProperty('--c', 'var(--ink)'); app.style.setProperty('--csoft', 'var(--surface2)');
+  app.innerHTML = `<button class="link" data-go="">← All topics</button>
+  <section class="shead"><span class="ic">🏁</span><div><div class="tp">Both topics</div><h1>Final mixed challenge</h1><span class="ar">التحدي النهائي</span>
+  <p>All ${QUESTIONS.length} questions, mixed. The question order and the answer order are random. Hints are still here to help you.</p></div></section>
+  <div id="quiz" style="margin-top:20px"></div>`;
+  startQuiz($('#quiz'), shuffle(QUESTIONS), { final: true });
+}
+
+/* ================= quiz engine ================= */
+const PRAISE = ['Excellent! 🎉', 'You got it! 👏', 'Super! 🚀', 'Great job! ⭐', 'Perfect! 💯'];
+const RETRY_PRAISE = ['You did it! 💪', 'Great thinking — you found it! 🧠', 'Well done — you didn’t give up! 🌟'];
+const TRY_AGAIN = ['Not yet — try again! 💪', 'Almost! Try another answer. 🙂', 'Good try! Read the hint and try again. 💡'];
+
+function startQuiz(el, qs, cfg) {
+  let i = 0, firstTry = 0;
+  function render() {
+    if (i >= qs.length) return done();
+    const q = qs[i];
+    const sec = SECTIONS.find(s => s.id === q.sec);
+    const color = TOPICS[sec.topic];
+    let wrongs = 0;
+    const order = shuffle(q.o.map((_, k) => k));
+    el.innerHTML = `<div class="quiz" style="--c:${color.c};--csoft:${color.soft}">
+      <div class="qtop"><span>Question ${i + 1} of ${qs.length}</span>
+        ${cfg.final ? `<span class="tag">${sec.icon} ${sec.title}</span>` : ''}
+        <span class="tag">Practice ${q.id.replace('b', '')}</span>
+        <span class="bar" style="--c:${color.c}"><i style="width:${i / qs.length * 100}%"></i></span></div>
+      <div class="qtext">${q.q}</div>
+      <button class="qsay" data-say="${esc(plain(q.q))}">🔊 Listen to the question</button>
+      <div class="opts" role="group" aria-label="Answer options">${order.map((k, j) => `<button class="opt" data-k="${k}"><span class="letter">${'ABCD'[j]}</span><span>${q.o[k]}</span></button>`).join('')}</div>
+      <div class="fb" aria-live="polite"></div></div>`;
+    const fb = $('.fb', el);
+    $$('.opt', el).forEach(b => b.addEventListener('click', () => {
+      const k = +b.dataset.k;
+      if (k === q.a) {
+        b.classList.add('right');
+        $$('.opt', el).forEach(x => x.disabled = true);
+        if (wrongs === 0) firstTry++;
+        progress[q.id] = (wrongs === 0 || progress[q.id] === 'first') ? 'first' : 'solved';
+        store.set('csc40m3.progress', progress); updateGlobal();
+        const title = wrongs === 0 ? PRAISE[Math.floor(Math.random() * PRAISE.length)] : RETRY_PRAISE[Math.floor(Math.random() * RETRY_PRAISE.length)];
+        fb.innerHTML = `<div class="fbox good"><div class="ttl">${title}</div><p>✅ ${q.ex}</p>
+          <div class="tries">${wrongs === 0 ? 'Correct on the first try!' : `Correct after ${wrongs + 1} tries.`}</div>
+          <div class="actions" style="justify-content:flex-start"><button class="btn nextq">${i + 1 < qs.length ? 'Next question ➜' : 'See my result 🏁'}</button></div></div>`;
+        burst(b);
+        $('.nextq', fb).onclick = () => { i++; render(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+        $('.nextq', fb).focus({ preventScroll: true });
+      } else {
+        wrongs++;
+        b.classList.add('wrong', 'shake'); b.disabled = true;
+        setTimeout(() => b.classList.remove('shake'), 450);
+        const left = $$('.opt:not(:disabled)', el).length;
+        fb.innerHTML = `<div class="fbox bad"><div class="ttl">${TRY_AGAIN[(wrongs - 1) % TRY_AGAIN.length]}</div>
+          <p>❌ ${q.why[k] || 'This answer does not match the question.'}</p>
+          <p>💡 <b>Hint:</b> ${q.h}</p>
+          ${wrongs >= 2 ? `<p>🔎 <b>Big hint:</b> focus on the key words <mark>${q.key}</mark>. Only ${left} answers are left!</p>` : ''}
+          <div class="tries">Tries: ${wrongs} · You can try again as many times as you need.</div></div>`;
+      }
+    }));
+  }
+  function done() {
+    const n = qs.length, pct = firstTry / n;
+    const stars = pct === 1 ? 3 : pct >= 0.6 ? 2 : 1;
+    const msg = stars === 3 ? 'Amazing! Every answer on the first try.' : stars === 2 ? 'Very good! You solved them all. Review the hints you used.' : 'You solved them all — that’s what matters! Practise once more to get more first tries.';
+    el.innerHTML = `<div class="quiz result"><div class="stars">${'⭐'.repeat(stars)}${'☆'.repeat(3 - stars)}</div>
+      <h3>${cfg.final ? 'Challenge complete!' : 'Section complete!'}</h3>
+      <p>First-try correct: <b>${firstTry} / ${n}</b></p><p class="muted">${msg}</p>
+      <div class="actions"><button class="btn ghost again">🔁 Practise again (new order)</button>
+      ${cfg.next ? `<button class="btn" data-go="${cfg.next.id}">Next: ${cfg.next.icon} ${cfg.next.title} ➜</button>` : `<button class="btn" data-go="">🏠 Back to all topics</button>`}</div></div>`;
+    $('.again', el).onclick = () => { i = 0; firstTry = 0; if (cfg.final) qs = shuffle(qs); render(); };
+    const card = $('.quiz', el); for (let k = 0; k < 14; k++) setTimeout(() => burstAt(card, card.clientWidth / 2, 40), k * 40);
+  }
+  render();
+}
+function burst(btn) {
+  const card = btn.closest('.quiz'); const r = btn.getBoundingClientRect(), c = card.getBoundingClientRect();
+  for (let k = 0; k < 10; k++) burstAt(card, r.left - c.left + r.width * 0.15, r.top - c.top + r.height / 2);
+}
+function burstAt(card, x, y) {
+  const e = document.createElement('span'); e.className = 'burst';
+  e.textContent = ['🎉', '⭐', '✨', '💚', '🎊'][Math.floor(Math.random() * 5)];
+  e.style.left = x + 'px'; e.style.top = y + 'px';
+  e.style.setProperty('--dx', (Math.random() * 240 - 120) + 'px'); e.style.setProperty('--dy', (Math.random() * -140 - 20) + 'px');
+  card.appendChild(e); setTimeout(() => e.remove(), 1000);
+}
+
+/* flying emoji along points inside an svg */
+function fly(svg, emoji, pts, dur, size) {
+  return new Promise(res => {
+    const t = S('text', { 'font-size': size || 26, 'text-anchor': 'middle', 'dominant-baseline': 'central' }, svg, emoji);
+    const segs = []; let total = 0;
+    for (let k = 1; k < pts.length; k++) { const d = Math.hypot(pts[k][0] - pts[k - 1][0], pts[k][1] - pts[k - 1][1]); segs.push(d); total += d; }
+    const t0 = performance.now();
+    function step(now) {
+      if (!svg.isConnected) { res(); return; }
+      const p = Math.min(1, (now - t0) / dur), e = p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      let dist = e * total, k = 0;
+      while (k < segs.length - 1 && dist > segs[k]) { dist -= segs[k]; k++; }
+      const f = segs[k] ? Math.min(1, dist / segs[k]) : 1;
+      t.setAttribute('x', pts[k][0] + (pts[k + 1][0] - pts[k][0]) * f);
+      t.setAttribute('y', pts[k][1] + (pts[k + 1][1] - pts[k][1]) * f);
+      if (p < 1) requestAnimationFrame(step); else { t.remove(); res(); }
+    }
+    requestAnimationFrame(step);
+  });
+}
+function setupCanvas(cv, h) {
+  const dpr = window.devicePixelRatio || 1;
+  const w = cv.clientWidth || 600;
+  cv.width = w * dpr; cv.height = h * dpr; cv.style.height = h + 'px';
+  const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  return { ctx, w, h };
+}
+const SIMS = {};
+
+/* ================= SIM: binary bulbs ================= */
+SIMS.binary = box => {
+  box.innerHTML = `<h3>💡 Binary light-bulb machine</h3>
+  <p class="muted">Click a bulb to turn it ON (1) or OFF (0). Watch the decimal number change.</p>
+  <div class="seg"><button data-bits="4">4 bits</button><button data-bits="5" class="on">5 bits</button></div>
+  <div class="bulbs"></div><div class="eq" aria-live="polite"></div>
+  <div class="row2">
+    <div class="mini"><h4>🎯 Challenge</h4><p style="margin:0">Turn on the right bulbs to make <span class="big target"></span></p>
+      <div class="tmsg" style="min-height:30px;font-weight:700;color:var(--ok)"></div><button class="btn small newt">New number</button></div>
+    <div class="mini"><h4>🔁 Decimal ➜ binary, step by step</h4>
+      <label>Type a number (0–<span class="maxn">31</span>): <input type="number" class="dec" min="0" max="31" value="22"></label>
+      <button class="btn small conv" style="margin-top:8px">Show the steps</button><ol class="stepsol"></ol></div>
+  </div>`;
+  let bits = 5, state = [1, 0, 1, 1, 0], target = 0, busy = false;
+  const bulbs = $('.bulbs', box), eq = $('.eq', box), tmsg = $('.tmsg', box);
+  const vals = () => Array.from({ length: bits }, (_, k) => 2 ** (bits - 1 - k));
+  const sum = () => vals().reduce((s, v, k) => s + v * state[k], 0);
+  function newTarget() { const max = 2 ** bits - 1; let t; do { t = 1 + Math.floor(Math.random() * max); } while (t === sum()); target = t; $('.target', box).textContent = t; }
+  function draw() {
+    const v = vals();
+    bulbs.innerHTML = v.map((pv, k) => `<button class="bcol ${state[k] ? 'on' : ''}" data-i="${k}" aria-label="Place value ${pv}: ${state[k] ? 'ON' : 'OFF'}"><span class="pv">${pv}</span><span class="bulb"></span><span class="bit">${state[k]}</span></button>`).join('');
+    const parts = v.filter((_, k) => state[k]);
+    eq.innerHTML = `<span class="code">${state.join('')}</span> = ${parts.length ? parts.join(' + ') : '0'} = <span class="big">${sum()}</span>`;
+    tmsg.textContent = (target && sum() === target) ? `🎉 Yes! ${state.join('')} = ${target}` : '';
+  }
+  bulbs.addEventListener('click', e => { const b = e.target.closest('.bcol'); if (!b || busy) return; const k = +b.dataset.i; state[k] = 1 - state[k]; draw(); });
+  $$('[data-bits]', box).forEach(b => b.onclick = () => {
+    if (busy) return; const nb = +b.dataset.bits; if (nb === bits) return;
+    $$('[data-bits]', box).forEach(x => x.classList.toggle('on', x === b));
+    state = nb === 4 ? state.slice(1) : [0, ...state]; bits = nb;
+    $('.maxn', box).textContent = 2 ** bits - 1; $('.dec', box).max = 2 ** bits - 1; $('.dec', box).value = bits === 4 ? 9 : 22;
+    newTarget(); draw();
+  });
+  $('.newt', box).onclick = () => { newTarget(); draw(); };
+  $('.conv', box).onclick = async () => {
+    if (busy) return;
+    const max = 2 ** bits - 1; let n = Math.round(+$('.dec', box).value);
+    if (isNaN(n) || n < 0) n = 0; if (n > max) n = max; $('.dec', box).value = n;
+    busy = true; const ol = $('.stepsol', box); ol.innerHTML = ''; state = state.map(() => 0); draw();
+    let rem = n; const v = vals();
+    for (let k = 0; k < v.length; k++) {
+      await wait(700); if (!box.isConnected) return;
+      let li;
+      if (rem >= v[k]) { li = `${rem} ≥ ${v[k]} ➜ put <b>1</b> under ${v[k]}. Left: ${rem} − ${v[k]} = ${rem - v[k]}`; rem -= v[k]; state[k] = 1; }
+      else li = `${rem} &lt; ${v[k]} ➜ put <b>0</b> under ${v[k]}`;
+      ol.insertAdjacentHTML('beforeend', `<li>${li}</li>`); draw();
+    }
+    await wait(400); if (!box.isConnected) return;
+    ol.insertAdjacentHTML('beforeend', `<li>✅ ${n} = <span class="code">${state.join('')}</span></li>`); busy = false;
+  };
+  newTarget(); draw();
+};
+
+/* ================= SIM: wireless ranges ================= */
+SIMS.wireless = box => {
+  box.innerHTML = `<h3>📶 Wireless: Wi-Fi vs Bluetooth</h3>
+  <p class="muted">Look at the circles: they show how far the signal goes.</p>
+  <div class="svgwrap"><svg viewBox="0 0 640 300" role="img" aria-label="Wi-Fi covers a whole office with many laptops; Bluetooth covers a short distance between a phone and headphones"></svg></div>
+  <div class="row2"><div class="mini"><h4>🛜 Wi-Fi</h4>Big range: a whole building. Connects <b>many</b> devices to the network. ✅ Office laptops.</div>
+  <div class="mini"><h4>🎧 Bluetooth</h4>Short range: about 10 metres. Usually connects <b>2 devices</b>. ✅ Headphones, mouse, speaker.</div></div>`;
+  const svg = $('svg', box);
+  S('rect', { x: 10, y: 10, width: 400, height: 280, rx: 16, style: 'fill:none;stroke:var(--t1);stroke-width:2;stroke-dasharray:6 6' }, svg);
+  S('text', { x: 210, y: 34, 'text-anchor': 'middle', class: 'svt', 'font-size': 16, 'font-weight': 700 }, svg, 'Office: Wi-Fi 🛜');
+  ['', 'd2', 'd3'].forEach(d => S('circle', { cx: 210, cy: 160, r: 150, class: 'ripple ' + d, style: 'fill:none;stroke:var(--t1);stroke-width:3' }, svg));
+  const laps = [[85, 85], [335, 85], [75, 235], [345, 235], [210, 262]];
+  laps.forEach(p => S('line', { x1: 210, y1: 160, x2: p[0], y2: p[1], style: 'stroke:var(--t1);stroke-width:2;stroke-dasharray:4 6;opacity:.6' }, svg));
+  laps.forEach(p => S('text', { x: p[0], y: p[1], 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 32 }, svg, '💻'));
+  S('circle', { cx: 210, cy: 160, r: 30, style: 'fill:var(--surface);stroke:var(--t1);stroke-width:3' }, svg);
+  S('text', { x: 210, y: 160, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 30 }, svg, '📡');
+  S('text', { x: 210, y: 205, 'text-anchor': 'middle', class: 'svt', 'font-size': 13, 'font-weight': 700 }, svg, 'Wi-Fi router');
+
+  S('rect', { x: 425, y: 10, width: 205, height: 280, rx: 16, style: 'fill:none;stroke:var(--t2);stroke-width:2;stroke-dasharray:6 6' }, svg);
+  S('text', { x: 527, y: 34, 'text-anchor': 'middle', class: 'svt', 'font-size': 16, 'font-weight': 700 }, svg, 'Bluetooth 🎧');
+  ['', 'd2', 'd3'].forEach(d => S('circle', { cx: 485, cy: 130, r: 62, class: 'ripple ' + d, style: 'fill:none;stroke:var(--t2);stroke-width:3' }, svg));
+  S('text', { x: 485, y: 130, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 34 }, svg, '📱');
+  S('text', { x: 560, y: 130, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 34 }, svg, '🎧');
+  S('text', { x: 520, y: 205, 'text-anchor': 'middle', class: 'svt', 'font-size': 13, 'font-weight': 700 }, svg, 'about 10 m');
+  S('text', { x: 585, y: 255, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 28 }, svg, '💻');
+  S('text', { x: 510, y: 258, 'text-anchor': 'middle', class: 'svm', 'font-size': 12, 'font-weight': 600 }, svg, 'too far ❌');
+};
+
+/* canvas helpers */
+function cLine(ctx, a, b, c, d) { ctx.beginPath(); ctx.moveTo(a, b); ctx.lineTo(c, d); ctx.stroke(); }
+function cRound(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+function cZig(ctx, xa, ya, xb, yb, t) {
+  ctx.beginPath(); ctx.moveTo(xa, ya);
+  const n = 7; for (let k = 1; k <= n; k++) { const f = k / n; const off = (k % 2 ? 6 : -6) * Math.sin(t * 0.3 + k); ctx.lineTo(xa + (xb - xa) * f + off, ya + (yb - ya) * f); }
+  ctx.stroke();
+}
+
+/* ================= SIM: copper vs fiber ================= */
+SIMS.cables = box => {
+  box.innerHTML = `<h3>⚡ Copper vs 🔦 fiber-optic</h3>
+  <p class="muted">Turn on the factory machines. Watch what happens to each signal.</p>
+  <label class="toggle"><input type="checkbox" class="emi"> 🏭 Turn ON the machines (electrical interference)</label>
+  <canvas aria-label="Animation of signals in a copper cable and a fiber-optic cable"></canvas><div class="msg"></div>`;
+  const cv = $('canvas', box), msg = $('.msg', box), emi = $('.emi', box);
+  const H = 270; let W, ctx;
+  function size() { const r = setupCanvas(cv, H); ctx = r.ctx; W = r.w; }
+  size();
+  const dotsC = Array.from({ length: 12 }, (_, k) => ({ x: k / 12 }));
+  const dotsF = Array.from({ length: 16 }, (_, k) => ({ x: k / 16 }));
+  function setMsg() {
+    msg.className = 'msg ' + (emi.checked ? 'bad' : 'good');
+    msg.innerHTML = emi.checked
+      ? '❌ <b>Copper:</b> the electrical noise mixes with the electrical signal, so the data has errors.<br>✅ <b>Fiber-optic:</b> light is not affected by electrical noise. The data arrives safely — even across a long building.'
+      : '✅ No interference. Both cables work. Copper carries <b>electricity</b> ⚡. Fiber-optic carries <b>light</b> 🔦.';
+  }
+  emi.onchange = setMsg; setMsg();
+  let t = 0;
+  function frame() {
+    if (!cv.isConnected) return;
+    if (cv.clientWidth && Math.abs(cv.clientWidth - W) > 2) size();
+    t++;
+    const on = emi.checked;
+    const ink = css('--ink'), muted = css('--muted'), cop = css('--copper'), fib = css('--fiber'), bad = css('--bad'), ok = css('--ok'), surf = css('--surface');
+    ctx.clearRect(0, 0, W, H);
+    const x0 = 70, x1 = W - 70, yC = 82, yF = 210;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    [yC, yF].forEach(y => [x0 - 52, x1 + 12].forEach(x => {
+      ctx.fillStyle = surf; ctx.strokeStyle = muted; ctx.lineWidth = 2; cRound(ctx, x, y - 22, 40, 44, 8); ctx.fill(); ctx.stroke();
+      ctx.font = '22px sans-serif'; ctx.fillStyle = ink; ctx.fillText('🖥️', x + 20, y + 1);
+    }));
+    ctx.font = '600 14px Lexend, sans-serif'; ctx.textAlign = 'left'; ctx.fillStyle = ink;
+    ctx.fillText('Copper cable: electrical signals ⚡', 14, yC - 40);
+    ctx.fillText('Fiber-optic cable: pulses of light 🔦', 14, yF - 40);
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = cop; ctx.lineWidth = 12; cLine(ctx, x0, yC, x1, yC);
+    ctx.strokeStyle = fib; ctx.globalAlpha = .3; ctx.lineWidth = 14; cLine(ctx, x0, yF, x1, yF); ctx.globalAlpha = 1; ctx.lineWidth = 4; cLine(ctx, x0, yF, x1, yF);
+    const mx = W / 2, my = 146;
+    ctx.font = '34px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('🏭', mx, my);
+    if (on) {
+      ctx.strokeStyle = bad; ctx.lineWidth = 2.5;
+      for (let k = -3; k <= 3; k++) { cZig(ctx, mx + k * 20, my - 22, mx + k * 42, yC + 14, t); cZig(ctx, mx + k * 20, my + 22, mx + k * 42, yF - 14, t + 4); }
+    }
+    const L = x1 - x0;
+    dotsC.forEach((d, k) => {
+      d.x = (d.x + 0.0028) % 1; let x = x0 + d.x * L, y = yC, col = '#ffe066';
+      if (on) { y += Math.sin(t * 0.45 + k * 2.1) * 10 + (Math.random() - .5) * 6; if (k % 3 === 0) col = bad; }
+      ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, 6, 0, 7); ctx.fill();
+    });
+    dotsF.forEach(d => {
+      d.x = (d.x + 0.004) % 1; const x = x0 + d.x * L;
+      const g = ctx.createRadialGradient(x, yF, 0, x, yF, 12); g.addColorStop(0, '#ffffff'); g.addColorStop(.45, fib); g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, yF, 12, 0, 7); ctx.fill();
+    });
+    ctx.font = '700 14px Lexend, sans-serif'; ctx.textAlign = 'right';
+    ctx.fillStyle = on ? bad : ok; ctx.fillText(on ? '❌ data errors' : '✅ data OK', W - 10, yC + 42);
+    ctx.fillStyle = ok; ctx.fillText('✅ data OK', W - 10, yF + 42);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+};
+
+/* ================= SIM: water pipe ================= */
+SIMS.pipe = box => {
+  box.innerHTML = `<h3>💧 Bandwidth vs throughput: the water pipe</h3>
+  <p class="muted"><b>Bandwidth</b> = how big the pipe is (the maximum). <b>Throughput</b> = how much water really flows. Press a button or move the sliders.</p>
+  <div class="chips">
+    <button class="chip" data-p="100,35">Link A: 100 / 35</button><button class="chip" data-p="60,50">Link B: 60 / 50</button>
+    <button class="chip" data-p="50,20">Branch office: 50 / 20</button><button class="chip" data-p="100,100">Full pipe: 100 / 100</button>
+  </div>
+  <canvas aria-label="A pipe: its size is the bandwidth, the moving water is the throughput"></canvas>
+  <div class="readout">
+    <label for="bw">🛣️ Bandwidth (max)</label><input id="bw" type="range" class="range bw" min="10" max="200" step="5" value="100"><b class="bwv"></b>
+    <label for="tp">💧 Throughput (real)</label><input id="tp" type="range" class="range tp" min="0" max="200" step="5" value="35"><b class="tpv"></b>
+  </div><div class="msg"></div>`;
+  const cv = $('canvas', box), bw = $('.bw', box), tp = $('.tp', box), msg = $('.msg', box);
+  const H = 220; let W, ctx;
+  function size() { const r = setupCanvas(cv, H); ctx = r.ctx; W = r.w; }
+  size();
+  let parts = [];
+  function sync() {
+    let B = +bw.value, T = +tp.value; if (T > B) { T = B; tp.value = T; }
+    $('.bwv', box).textContent = B + ' Mbps'; $('.tpv', box).textContent = T + ' Mbps';
+    const n = Math.round(T * 0.8);
+    while (parts.length < n) parts.push({ x: Math.random(), y: Math.random(), s: 0.6 + Math.random() * 0.5 });
+    parts.length = n;
+    const pct = Math.round(T / B * 100);
+    $$('.chip', box).forEach(c => c.classList.toggle('on', c.dataset.p === B + ',' + T));
+    msg.className = 'msg';
+    msg.innerHTML = T === B
+      ? `The pipe is full: throughput = bandwidth = <b>${B} Mbps</b>. This is rare in real life.`
+      : `The connection <b>can</b> carry <b>${B} Mbps</b> (bandwidth), but only <b>${T} Mbps</b> really moved (throughput). That is <b>${pct}%</b> of the capacity. Throughput is usually lower because of busy networks, distance or old devices.`;
+  }
+  bw.oninput = sync; tp.oninput = sync;
+  $$('.chip', box).forEach(c => c.onclick = () => { const [B, T] = c.dataset.p.split(',').map(Number); bw.value = B; tp.value = T; sync(); });
+  sync();
+  function frame() {
+    if (!cv.isConnected) return;
+    if (cv.clientWidth && Math.abs(cv.clientWidth - W) > 2) size();
+    const B = +bw.value, ink = css('--ink'), t1 = css('--t1'), surf = css('--surface'), muted = css('--muted');
+    ctx.clearRect(0, 0, W, H);
+    const cy = 112, ph = 24 + B / 200 * 140, x0 = 30, x1 = W - 30;
+    ctx.fillStyle = surf; ctx.fillRect(x0, cy - ph / 2, x1 - x0, ph);
+    ctx.strokeStyle = ink; ctx.lineWidth = 5; cLine(ctx, x0, cy - ph / 2, x1, cy - ph / 2); cLine(ctx, x0, cy + ph / 2, x1, cy + ph / 2);
+    ctx.fillStyle = t1;
+    parts.forEach(p => { p.x += 0.004 * p.s; if (p.x > 1) p.x -= 1; const x = x0 + 6 + p.x * (x1 - x0 - 12), y = cy - ph / 2 + 7 + p.y * (ph - 14); ctx.beginPath(); ctx.arc(x, y, 4.5, 0, 7); ctx.fill(); });
+    ctx.font = '600 13px Lexend, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = muted;
+    ctx.fillText('↕ pipe size = bandwidth (' + B + ' Mbps)', W / 2, Math.max(10, cy - ph / 2 - 14));
+    ctx.fillText('● moving water = throughput (' + tp.value + ' Mbps)', W / 2, Math.min(H - 8, cy + ph / 2 + 16));
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+};
+
+/* ================= SIM: units ================= */
+SIMS.units = box => {
+  box.innerHTML = `<h3>📏 Units: bits, bytes, Mbps and Gbps</h3>
+  <div class="row2" style="margin-top:8px">
+    <div class="mini"><h4>8 bits = 1 Byte</h4>
+      <div class="bits8">${'<i>b</i>'.repeat(8)}<span style="font-size:22px;margin:0 4px">=</span><span class="bytebox"><i style="border-color:var(--t2);background:var(--t2soft);width:auto;padding:0 10px">1 B</i></span></div>
+      <p style="margin:10px 0 0;font-size:15px">Mbps = mega<b>bits</b> per second ➜ <b>speed</b> 🚀<br>MB, GB = mega<b>bytes</b>, giga<b>bytes</b> ➜ <b>storage</b> 💾</p></div>
+    <div class="mini"><h4>1 Gbps = 1,000 Mbps</h4>
+      <div style="display:flex;gap:2px;border:3px solid var(--t2);border-radius:10px;padding:3px">${'<span style="flex:1;height:28px;background:var(--t1soft);border:1px solid var(--t1);border-radius:4px;font-size:10px;font-weight:700;display:grid;place-items:center">100</span>'.repeat(10)}</div>
+      <p class="muted" style="margin:4px 0 8px;font-size:13px;text-align:center">10 × 100 Mbps = 1 Gbps</p>
+      <label style="font-size:15px">Try it: <input type="number" class="dec gin" value="2" min="0" step="0.5"> Gbps = <b class="gout"></b> Mbps</label></div>
+  </div>
+  <h4 style="margin:20px 0 2px;font-size:18px">⚠️ The unit trap: which device is the fastest?</h4>
+  <p class="muted" style="margin:0">First, the bars use only the numbers. Then change everything to Mbps.</p>
+  <div class="seg"><button data-u="raw" class="on">Just the numbers</button><button data-u="mbps">Change all to Mbps</button></div>
+  <div class="chart"></div><div class="chart-labels"></div><div class="msg"></div>`;
+  const gin = $('.gin', box), gout = $('.gout', box);
+  const g = () => { const v = Math.max(0, +gin.value || 0); gout.textContent = (v * 1000).toLocaleString('en-US'); };
+  gin.oninput = g; g();
+  const dev = [['📱 iPhone', 500, 'Mbps'], ['📲 iPad', 1, 'Gbps'], ['💻 Chromebook', 800, 'Mbps'], ['💻 Laptop', 2, 'Gbps']];
+  const chart = $('.chart', box), msg = $('.msg', box);
+  $('.chart-labels', box).innerHTML = dev.map(d => `<span>${d[0]}</span>`).join('');
+  chart.innerHTML = dev.map(() => `<div class="col"><span class="val"></span><span class="colbar" style="height:4px"></span></div>`).join('');
+  function draw(mode) {
+    const vals = dev.map(d => mode === 'raw' ? d[1] : (d[2] === 'Gbps' ? d[1] * 1000 : d[1]));
+    const max = Math.max(...vals);
+    $$('.col', chart).forEach((c, k) => {
+      c.classList.toggle('win', mode === 'mbps' && vals[k] === max);
+      $('.val', c).textContent = mode === 'raw' ? `${dev[k][1]} ${dev[k][2]}` : `${vals[k].toLocaleString('en-US')} Mbps`;
+      $('.colbar', c).style.height = Math.max(4, vals[k] / max * 160) + 'px';
+    });
+    msg.className = 'msg ' + (mode === 'raw' ? 'bad' : 'good');
+    msg.innerHTML = mode === 'raw'
+      ? '😮 Here the laptop looks the <b>slowest</b>. But wait — the numbers have <b>different units</b>! Press “Change all to Mbps”.'
+      : '✅ Now everything is in Mbps. The <b>laptop (2 Gbps = 2,000 Mbps)</b> is the fastest. Always use the <b>same unit</b> before you compare.';
+  }
+  $$('[data-u]', box).forEach(b => b.onclick = () => { $$('[data-u]', box).forEach(x => x.classList.toggle('on', x === b)); draw(b.dataset.u); });
+  requestAnimationFrame(() => draw('raw'));
+};
+
+/* ================= SIM: client-server vs P2P ================= */
+SIMS.models = box => {
+  box.innerHTML = `<h3>🖨️ Office network simulator</h3>
+  <p class="muted">Choose a model. Then <b>click a computer</b> 💻.</p>
+  <div class="seg"><button data-m="cs" class="on">🏢 Client-server</button><button data-m="p2p">🤝 Peer-to-peer</button></div>
+  <div><label class="toggle brkw"><input type="checkbox" class="brk"> 💥 Break the server</label></div>
+  <div class="svgwrap"><svg viewBox="0 0 640 330"></svg></div><div class="msg"></div>`;
+  const svg = $('svg', box), msg = $('.msg', box), brk = $('.brk', box), brkw = $('.brkw', box);
+  let mode = 'cs', printed = 0, busy = false;
+  const PCS = [[100, 70], [540, 70], [100, 250], [540, 250]], SV = [320, 150], PR = [320, 282];
+  const setMsg = (h, c) => { msg.className = 'msg ' + (c || ''); msg.innerHTML = h; };
+  function draw() {
+    svg.innerHTML = '';
+    if (mode === 'cs') {
+      PCS.forEach(p => S('line', { x1: p[0], y1: p[1], x2: SV[0], y2: SV[1], class: 'wire' }, svg));
+      S('line', { x1: SV[0], y1: SV[1], x2: PR[0], y2: PR[1], class: 'wire' }, svg);
+      const broken = brk.checked;
+      S('rect', { x: 266, y: 110, width: 108, height: 80, rx: 14, style: `fill:var(--surface);stroke:${broken ? 'var(--bad)' : 'var(--t1)'};stroke-width:4` }, svg);
+      S('text', { x: 320, y: 140, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 32 }, svg, broken ? '💥' : '🗄️');
+      S('text', { x: 320, y: 176, 'text-anchor': 'middle', class: 'svt', 'font-size': 13, 'font-weight': 700 }, svg, broken ? 'SERVER DOWN' : 'Server');
+      S('circle', { cx: PR[0], cy: PR[1], r: 30, style: 'fill:var(--surface);stroke:var(--border);stroke-width:2' }, svg);
+      S('text', { x: PR[0], y: PR[1], 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 32 }, svg, '🖨️');
+      S('text', { x: 360, y: 278, class: 'svt', 'font-size': 13, 'font-weight': 700 }, svg, 'Shared printer');
+      S('text', { x: 360, y: 296, class: 'svm', 'font-size': 13 }, svg, 'Pages printed: ' + printed);
+    } else {
+      for (let a = 0; a < 4; a++) for (let b = a + 1; b < 4; b++) S('line', { x1: PCS[a][0], y1: PCS[a][1], x2: PCS[b][0], y2: PCS[b][1], class: 'wire' }, svg);
+      S('rect', { x: 230, y: 146, width: 180, height: 34, rx: 17, style: 'fill:var(--surface);stroke:var(--border)' }, svg);
+      S('text', { x: 320, y: 164, 'text-anchor': 'middle', 'dominant-baseline': 'central', class: 'svm', 'font-size': 13, 'font-weight': 700 }, svg, '🚫 No central server');
+    }
+    PCS.forEach((p, k) => {
+      const g = S('g', { class: 'pc', 'data-k': k, tabindex: 0, role: 'button', 'aria-label': (mode === 'cs' ? 'Client ' : 'Peer ') + (k + 1), style: 'cursor:pointer' }, svg);
+      S('circle', { cx: p[0], cy: p[1], r: 36, style: 'fill:var(--surface);stroke:var(--t1);stroke-width:3' }, g);
+      S('text', { x: p[0], y: p[1], 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 34 }, g, '💻');
+      S('text', { x: p[0], y: p[1] + 54, 'text-anchor': 'middle', class: 'svt', 'font-size': 14, 'font-weight': 700 }, g, (mode === 'cs' ? 'Client ' : 'Peer ') + (k + 1));
+    });
+  }
+  function intro() {
+    setMsg(mode === 'cs'
+      ? '🏢 <b>Client-server:</b> the clients <b>request</b> printing. The <b>server</b> manages it <b>centrally</b>. Click a client. Then try “Break the server”.'
+      : '🤝 <b>Peer-to-peer:</b> all computers are equal. Click a computer to share its file <b>directly</b>.');
+  }
+  async function act(k) {
+    if (busy) return; busy = true;
+    if (mode === 'cs') {
+      await fly(svg, '📄', [PCS[k], SV], 700);
+      if (brk.checked) setMsg(`❌ Client ${k + 1} sent the print job, but the <b>server is down</b>. No printing and no shared files. Client ${k + 1} still turns on and works — only the <b>central service</b> stopped.`, 'bad');
+      else {
+        await fly(svg, '📄', [SV, PR], 600); printed++; draw();
+        setMsg(`✅ Client ${k + 1} <b>requested</b> printing ➜ the <b>server managed</b> the job ➜ the printer printed. Pages printed: ${printed}.`, 'good');
+      }
+    } else {
+      await Promise.all([0, 1, 2, 3].filter(o => o !== k).map(o => fly(svg, '📁', [PCS[k], PCS[o]], 900)));
+      setMsg(`✅ Peer ${k + 1} shared its file <b>directly</b> with the other computers. No server was needed.`, 'good');
+    }
+    busy = false;
+  }
+  svg.addEventListener('click', e => { const g = e.target.closest('.pc'); if (g) act(+g.dataset.k); });
+  svg.addEventListener('keydown', e => { const g = e.target.closest('.pc'); if (g && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); act(+g.dataset.k); } });
+  brk.onchange = () => { draw(); setMsg(brk.checked ? '💥 The server is broken. Now click a client and try to print.' : '🔧 The server is repaired. Click a client to print.', brk.checked ? 'bad' : ''); };
+  $$('[data-m]', box).forEach(b => b.onclick = () => { if (busy) return; mode = b.dataset.m; $$('[data-m]', box).forEach(x => x.classList.toggle('on', x === b)); brkw.style.display = mode === 'cs' ? '' : 'none'; draw(); intro(); });
+  draw(); intro();
+};
+
+/* ================= SIM: topology ================= */
+SIMS.topology = box => {
+  const NAMES = { star: '⭐ Star', bus: '➖ Bus', ring: '⭕ Ring', mesh: '🕸️ Mesh' };
+  box.innerHTML = `<h3>✂️ Cable-cutting lab</h3>
+  <p class="muted">Choose a shape. Then <b>click any cable</b> to cut it. Which computers lose the network?</p>
+  <div class="seg">${Object.keys(NAMES).map((t, k) => `<button data-t="${t}" class="${k ? '' : 'on'}">${NAMES[t]}</button>`).join('')}</div>
+  <div class="actions" style="justify-content:flex-start;margin:0 0 10px"><button class="btn small send">📨 Send data: PC 1 ➜ PC 3</button><button class="btn small ghost rst">🔧 Repair all cables</button></div>
+  <div class="svgwrap"><svg viewBox="0 0 640 340"></svg></div><div class="msg"></div>`;
+  const svg = $('svg', box), msg = $('.msg', box), send = $('.send', box);
+  let type = 'star', topo, cut = null, busy = false;
+  const ALL = ['P1', 'P2', 'P3', 'P4', 'P5'];
+  const ell = (n, cx, cy, rx, ry, s) => Array.from({ length: n }, (_, k) => { const a = (s + k * 360 / n) * Math.PI / 180; return [cx + rx * Math.cos(a), cy + ry * Math.sin(a)]; });
+  const pcName = id => id.replace('P', 'PC ');
+  function build(t) {
+    const nodes = [], links = [];
+    const pcs = pos => pos.forEach((p, k) => nodes.push({ id: 'P' + (k + 1), x: p[0], y: p[1], type: 'pc' }));
+    if (t === 'star') {
+      nodes.push({ id: 'S', x: 320, y: 165, type: 'switch' }); pcs(ell(5, 320, 165, 240, 118, -90));
+      ALL.forEach(id => links.push({ a: 'S', b: id, aff: [id], note: `Only <b>${pcName(id)}</b> lost the network. Everyone else still works! ⭐ Each computer has its <b>own cable</b> to the switch.` }));
+    }
+    if (t === 'bus') {
+      const xs = [110, 215, 320, 425, 530];
+      xs.forEach((x, k) => nodes.push({ id: 'P' + (k + 1), x, y: k % 2 ? 270 : 62, type: 'pc' }));
+      nodes.push({ id: 'E0', x: 40, y: 165, type: 'end' }); xs.forEach((x, k) => nodes.push({ id: 'J' + (k + 1), x, y: 165, type: 'j' })); nodes.push({ id: 'E1', x: 600, y: 165, type: 'end' });
+      const ch = ['E0', 'J1', 'J2', 'J3', 'J4', 'J5', 'E1'];
+      for (let k = 0; k < ch.length - 1; k++) links.push({ a: ch[k], b: ch[k + 1], aff: ALL, main: true, note: 'The <b>main cable</b> is broken ➜ the <b>whole network</b> stops! 🚫' });
+      xs.forEach((_, k) => links.push({ a: 'P' + (k + 1), b: 'J' + (k + 1), aff: ['P' + (k + 1)], note: `Only the short cable to PC ${k + 1} broke. But now cut the thick <b>main cable</b> and see what happens!` }));
+    }
+    if (t === 'ring') { pcs(ell(5, 320, 165, 230, 118, -90)); for (let k = 0; k < 5; k++) links.push({ a: 'P' + (k + 1), b: 'P' + ((k + 1) % 5 + 1), aff: ALL, note: 'The circle is broken ➜ data can’t travel around the ring ➜ the <b>whole network</b> stops. ⭕' }); }
+    if (t === 'mesh') { pcs(ell(5, 320, 165, 230, 118, -90)); for (let a = 1; a <= 5; a++) for (let b = a + 1; b <= 5; b++) links.push({ a: 'P' + a, b: 'P' + b, aff: [], note: 'No problem! Data takes <b>another path</b>. 🛤️ Mesh is very reliable, but it needs <b>many cables</b>.' }); }
+    return { nodes, links };
+  }
+  const INTRO = {
+    star: '⭐ <b>Star:</b> every computer has its own cable to a central <b>switch</b>. Cut a cable, or press “Send data” to see the switch work.',
+    bus: '➖ <b>Bus:</b> all computers share one thick <b>main cable</b>. Cut a cable.',
+    ring: '⭕ <b>Ring:</b> computers are connected in a circle. Cut a cable.',
+    mesh: '🕸️ <b>Mesh:</b> many cables between the computers. Cut a cable.'
+  };
+  function draw() {
+    svg.innerHTML = '';
+    const N = id => topo.nodes.find(n => n.id === id);
+    topo.links.forEach((l, i) => {
+      const A = N(l.a), B = N(l.b), isCut = cut === i;
+      const g = S('g', { class: 'lnk', 'data-i': i, style: 'cursor:pointer' }, svg);
+      S('line', { x1: A.x, y1: A.y, x2: B.x, y2: B.y, style: `stroke:${isCut ? 'var(--bad)' : (l.main ? 'var(--ink)' : 'var(--wire)')};stroke-width:${l.main ? 8 : 4};stroke-linecap:round;${isCut ? 'stroke-dasharray:6 10' : ''}` }, g);
+      S('line', { x1: A.x, y1: A.y, x2: B.x, y2: B.y, style: 'stroke:transparent;stroke-width:24' }, g);
+      if (isCut) S('text', { x: (A.x + B.x) / 2, y: (A.y + B.y) / 2, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 26 }, g, '✂️');
+    });
+    const aff = cut != null ? topo.links[cut].aff : null;
+    topo.nodes.forEach(n => {
+      if (n.type === 'switch') {
+        S('rect', { x: n.x - 52, y: n.y - 24, width: 104, height: 48, rx: 12, style: 'fill:var(--t1)' }, svg);
+        S('text', { x: n.x, y: n.y, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 15, 'font-weight': 700, style: 'fill:var(--onaccent);font-family:Lexend,sans-serif' }, svg, '🔀 Switch');
+      } else if (n.type === 'end') S('rect', { x: n.x - 6, y: n.y - 16, width: 12, height: 32, rx: 3, style: 'fill:var(--ink)' }, svg);
+      else if (n.type === 'j') S('circle', { cx: n.x, cy: n.y, r: 6, style: 'fill:var(--ink)' }, svg);
+      else {
+        const down = aff && aff.includes(n.id);
+        const g = S('g', { opacity: down ? .45 : 1, 'data-node': n.id }, svg);
+        S('circle', { cx: n.x, cy: n.y, r: 30, style: `fill:var(--surface);stroke:${down ? 'var(--bad)' : (aff ? 'var(--ok)' : 'var(--border)')};stroke-width:3` }, g);
+        S('text', { x: n.x, y: n.y, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 28 }, g, '💻');
+        S('text', { x: n.x, y: n.y + 46, 'text-anchor': 'middle', class: 'svt', 'font-size': 14, 'font-weight': 700 }, g, pcName(n.id));
+        if (aff) S('text', { x: n.x + 26, y: n.y - 24, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 18 }, svg, down ? '❌' : '✅');
+      }
+    });
+  }
+  function setType(t) { type = t; topo = build(t); cut = null; send.style.display = t === 'star' ? '' : 'none'; draw(); msg.className = 'msg'; msg.innerHTML = INTRO[t]; }
+  svg.addEventListener('click', e => {
+    if (busy) return; const g = e.target.closest('.lnk'); if (!g) return;
+    const i = +g.dataset.i; cut = cut === i ? null : i; draw();
+    if (cut == null) { msg.className = 'msg'; msg.innerHTML = '🔧 Cable repaired. ' + INTRO[type]; return; }
+    const l = topo.links[cut]; msg.className = 'msg ' + (l.aff.length > 1 ? 'bad' : 'good'); msg.innerHTML = '✂️ ' + l.note;
+  });
+  $('.rst', box).onclick = () => { if (!busy) setType(type); };
+  send.onclick = async () => {
+    if (busy) return; busy = true;
+    const N = id => topo.nodes.find(n => n.id === id), p1 = N('P1'), s = N('S'), p3 = N('P3');
+    const cutId = cut != null ? topo.links[cut].b : null;
+    if (cutId === 'P1') { await fly(svg, '📨', [[p1.x, p1.y], [(p1.x + s.x) / 2, (p1.y + s.y) / 2]], 600); msg.className = 'msg bad'; msg.innerHTML = '❌ The cable from PC 1 is cut, so the data can’t leave. Press “Repair all cables”.'; busy = false; return; }
+    await fly(svg, '📨', [[p1.x, p1.y], [s.x, s.y]], 650);
+    if (cutId === 'P3') { await fly(svg, '📨', [[s.x, s.y], [(s.x + p3.x) / 2, (s.y + p3.y) / 2]], 500); msg.className = 'msg bad'; msg.innerHTML = '❌ The cable to PC 3 is cut, so the data can’t arrive. Press “Repair all cables”.'; busy = false; return; }
+    await fly(svg, '📨', [[s.x, s.y], [p3.x, p3.y]], 650);
+    const badge = S('text', { x: p3.x, y: p3.y - 44, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 14, 'font-weight': 700, style: 'fill:var(--ok);font-family:Lexend,sans-serif' }, svg, '📥 Got it!');
+    msg.className = 'msg good'; msg.innerHTML = '✅ The switch sent the data <b>only to PC 3</b>. PC 2, PC 4 and PC 5 did not get it. A switch <b>forwards data to the correct device</b>.';
+    setTimeout(() => badge.remove(), 2200); busy = false;
+  };
+  $$('[data-t]', box).forEach(b => b.onclick = () => { if (busy) return; $$('[data-t]', box).forEach(x => x.classList.toggle('on', x === b)); setType(b.dataset.t); });
+  setType('star');
+};
+
+/* ================= SIM: computer vision ================= */
+SIMS.vision = box => {
+  box.innerHTML = `<h3>📷 One picture, five AI techniques</h3>
+  <p class="muted">This is a camera picture from a warehouse. Choose a technique and see what the AI gives you.</p>
+  <div class="vbtns">
+    <button data-v="none" class="on">📷 Camera only</button><button data-v="cls">🏷️ Classification</button><button data-v="det">🔲 Object detection</button>
+    <button data-v="seg">🎨 Segmentation</button><button data-v="ocr">🔤 OCR</button><button data-v="sim">🔍 Similarity search</button>
+  </div>
+  <div class="svgwrap"><svg viewBox="0 0 640 360" role="img" aria-label="Warehouse picture with three packages on a conveyor belt. One package is damaged. One has a printed label."></svg></div>
+  <div class="msg"></div>`;
+  const svg = $('svg', box), msg = $('.msg', box);
+  const sc = S('g', {}, svg);
+  S('rect', { x: 0, y: 0, width: 640, height: 360, fill: '#cfd9e6' }, sc);
+  S('rect', { x: 0, y: 250, width: 640, height: 110, fill: '#97a4b6' }, sc);
+  for (let k = 0; k < 4; k++) S('rect', { x: 20 + k * 160, y: 40, width: 120, height: 12, rx: 3, fill: '#b1bfd0' }, sc);
+  S('rect', { x: 20, y: 228, width: 600, height: 26, rx: 8, fill: '#3b4556' }, sc);
+  for (let x = 45; x < 620; x += 50) S('circle', { cx: x, cy: 264, r: 9, fill: '#252c38' }, sc);
+  S('rect', { x: 60, y: 138, width: 130, height: 90, fill: '#c58a4a', stroke: '#8a5a2b', 'stroke-width': 2 }, sc);
+  S('rect', { x: 118, y: 138, width: 14, height: 90, fill: '#e2b77f' }, sc);
+  S('polygon', { points: '250,118 366,118 390,142 390,228 250,228', fill: '#b97c3f', stroke: '#7a4d22', 'stroke-width': 2 }, sc);
+  S('polygon', { points: '366,118 390,142 366,142', fill: '#8f5c2c' }, sc);
+  S('polyline', { points: '272,140 290,160 280,175 305,192 296,210 318,226', fill: 'none', stroke: '#3a2410', 'stroke-width': 4 }, sc);
+  S('polyline', { points: '330,150 345,170 338,186', fill: 'none', stroke: '#3a2410', 'stroke-width': 3 }, sc);
+  S('rect', { x: 450, y: 148, width: 130, height: 80, fill: '#c99256', stroke: '#8a5a2b', 'stroke-width': 2 }, sc);
+  S('rect', { x: 462, y: 156, width: 106, height: 60, rx: 4, fill: '#ffffff', stroke: '#555' }, sc);
+  for (let k = 0; k < 17; k++) S('rect', { x: 469 + k * 5.5, y: 162, width: k % 3 ? 2 : 3.5, height: 20, fill: '#111' }, sc);
+  S('text', { x: 515, y: 202, 'text-anchor': 'middle', 'font-size': 12, 'font-family': 'monospace', 'font-weight': 700, fill: '#111' }, sc, 'TRK 4821 7730');
+
+  const ov = {};
+  ['cls', 'det', 'seg', 'ocr', 'sim'].forEach(m => ov[m] = S('g', { style: 'display:none' }, svg));
+  // classification
+  S('rect', { x: 4, y: 4, width: 632, height: 352, rx: 6, fill: 'none', stroke: '#f5a524', 'stroke-width': 8 }, ov.cls);
+  S('rect', { x: 120, y: 288, width: 400, height: 52, rx: 12, fill: 'rgba(15,20,35,.88)' }, ov.cls);
+  S('text', { x: 320, y: 315, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: '#fff', 'font-size': 21, 'font-weight': 700, 'font-family': 'Lexend,sans-serif' }, ov.cls, 'Whole image ➜ DAMAGED ⚠️');
+  // detection
+  [[54, 132, 142, 102, 'package 97%', '#16a34a'], [244, 112, 152, 122, 'damaged package 94%', '#dc2626'], [444, 142, 142, 92, 'package 96%', '#16a34a']].forEach(([x, y, w, h, l, c]) => {
+    S('rect', { x, y, width: w, height: h, fill: 'none', stroke: c, 'stroke-width': 4 }, ov.det);
+    const tw = l.length * 7.6 + 14;
+    S('rect', { x, y: y - 24, width: tw, height: 24, fill: c }, ov.det);
+    S('text', { x: x + 7, y: y - 12, 'dominant-baseline': 'central', fill: '#fff', 'font-size': 13, 'font-weight': 700, 'font-family': 'Lexend,sans-serif' }, ov.det, l);
+  });
+  // segmentation
+  S('rect', { x: 0, y: 0, width: 640, height: 360, fill: 'rgba(10,15,30,.74)' }, ov.seg);
+  S('rect', { x: 60, y: 138, width: 130, height: 90, fill: '#ec4899', opacity: .9 }, ov.seg);
+  S('polygon', { points: '250,118 366,118 390,142 390,228 250,228', fill: '#f97316', opacity: .9 }, ov.seg);
+  S('rect', { x: 450, y: 148, width: 130, height: 80, fill: '#22c55e', opacity: .9 }, ov.seg);
+  S('text', { x: 320, y: 300, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: '#fff', 'font-size': 20, 'font-weight': 700, 'font-family': 'Lexend,sans-serif' }, ov.seg, 'Product pixels ≈ 16% of the image');
+  // ocr
+  S('rect', { x: 456, y: 150, width: 118, height: 72, rx: 6, fill: 'rgba(168,85,247,.12)', stroke: '#a855f7', 'stroke-width': 4, 'stroke-dasharray': '8 6' }, ov.ocr);
+  S('text', { x: 600, y: 130, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 34 }, ov.ocr, '🔍');
+  // similarity
+  S('rect', { x: 4, y: 4, width: 632, height: 352, rx: 6, fill: 'none', stroke: '#0ea5e9', 'stroke-width': 6 }, ov.sim);
+  S('rect', { x: 200, y: 288, width: 240, height: 48, rx: 12, fill: 'rgba(15,20,35,.88)' }, ov.sim);
+  S('text', { x: 320, y: 312, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: '#fff', 'font-size': 18, 'font-weight': 700, 'font-family': 'Lexend,sans-serif' }, ov.sim, 'Search image 🔍');
+
+  const thumb = (x, y, w, h, c, p) => `<div><svg viewBox="0 0 80 60" width="104" height="78" aria-hidden="true"><rect width="80" height="60" rx="6" fill="#cfd9e6"/><rect y="44" width="80" height="16" fill="#3b4556"/><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}" stroke="#8a5a2b"/></svg><br>${p}% similar</div>`;
+  const TXT = {
+    none: '📷 A camera only <b>takes</b> the picture. It does not understand it. Choose an AI technique above to <b>analyse</b> the picture. That is <b>computer vision</b>.',
+    cls: '<b>🏷️ Image classification</b> gives <b>ONE label for the WHOLE image</b>, from fixed categories: <span class="code">damaged</span> or <span class="code">not damaged</span>. It does <b>not</b> show where the damage is.<br><b>Use it when:</b> you need one answer for each picture.',
+    det: '<b>🔲 Object detection</b> finds <b>each</b> object and draws a <b>box</b> to show <b>where</b> it is. Here: 3 packages, 1 damaged.<br><b>Use it when:</b> there are many objects (like many safety helmets) and you need to know where each one is.',
+    seg: '<b>🎨 Image segmentation</b> colors the <b>exact pixels</b> of each product and separates them from the background. Now we can measure the area: the products cover about <b>16%</b> of the image.<br><b>Use it when:</b> you need the exact shape or area.',
+    ocr: '<b>🔤 OCR</b> reads the printed characters on the label and turns them into real text:<br><span class="ocrbox"></span><br><b>Use it when:</b> you need to search or copy printed text, like tracking numbers.',
+    sim: '<b>🔍 Similarity search</b> finds other pictures that <b>look like</b> this one:<div class="thumbs">' + thumb(10, 22, 30, 22, '#b97c3f', 92) + thumb(30, 18, 34, 26, '#c58a4a', 85) + thumb(22, 26, 24, 18, '#c99256', 78) + '</div><b>Use it when:</b> you want “more pictures like this”. It does not label, locate or read anything.'
+  };
+  let typing = 0;
+  $$('[data-v]', box).forEach(b => b.onclick = () => {
+    const m = b.dataset.v;
+    $$('[data-v]', box).forEach(x => x.classList.toggle('on', x === b));
+    Object.keys(ov).forEach(k => ov[k].style.display = k === m ? '' : 'none');
+    msg.innerHTML = TXT[m];
+    if (m === 'ocr') {
+      const my = ++typing, out = $('.ocrbox', msg), s = 'TRK 4821 7730'; let i = 0;
+      (function tick() { if (my !== typing || !out.isConnected) return; out.textContent = s.slice(0, ++i) + (i < s.length ? '▌' : ''); if (i < s.length) setTimeout(tick, 90); })();
+    }
+  });
+  msg.innerHTML = TXT.none;
+};
+
+/* ================= SIM: language flow ================= */
+SIMS.langflow = box => {
+  const C = {
+    write: { e: '📝', n: 'A written message in Arabic', input: '<span dir="rtl" style="font-family:Tajawal,sans-serif;font-size:19px;font-weight:700">مرحباً، أريد تغيير موعد رحلتي إلى يوم الجمعة.</span>', tool: '🌍 Machine translation', out: '“Hello, I want to change my trip to Friday.”', note: '📝 Written text ➜ written text in <b>another language</b>.' },
+    speak: { e: '🎤', n: 'Spoken words (sound)', input: '<span style="font-size:26px">🔊 〰️〰️〰️</span><small>a customer speaking</small>', tool: '🎤 Speech recognition', out: '“Where is my order?”', note: '🔊 Sound ➜ text.' },
+    photo: { e: '📷', n: 'A photo of a printed label', input: '<span style="font-size:26px">🖼️</span><span class="code">TRK 4821</span><small>text inside a picture</small>', tool: '🔤 OCR', out: 'TRK 4821 (real text you can search)', note: '🖼️ Text inside a picture ➜ real text.' },
+    feat: { e: '📋', n: 'A list of product features', input: '• waterproof<br>• 20-hour battery<br>• blue', tool: '✨ Generative AI', out: '“Meet our blue waterproof speaker! Its 20-hour battery keeps your music playing all day.”', note: '✨ Features ➜ a <b>NEW</b> description that did not exist before. This is <b>generative AI</b>.' }
+  };
+  box.innerHTML = `<h3>🔀 Which AI tool do I need?</h3><p class="muted">Look at the <b>input</b>. Click one to see which AI tool changes it, and what comes out.</p>
+  <div class="choices">${Object.keys(C).map(k => `<button class="choice" data-c="${k}"><span class="e">${C[k].e}</span>${C[k].n}</button>`).join('')}</div>
+  <div class="flow"><div class="fnode n1"><small>Input</small><div class="v">?</div></div><span class="farrow">➜</span>
+  <div class="fnode n2"><small>AI tool</small><div class="v" style="font-weight:700;font-size:18px">?</div></div><span class="farrow">➜</span>
+  <div class="fnode n3"><small>Output</small><div class="v" style="font-weight:600">?</div></div></div><div class="msg">Choose an input above. 👆</div>`;
+  let tok = 0;
+  $$('.choice', box).forEach(b => b.onclick = async () => {
+    const c = C[b.dataset.c], my = ++tok;
+    $$('.choice', box).forEach(x => x.classList.toggle('on', x === b));
+    const n1 = $('.n1', box), n2 = $('.n2', box), n3 = $('.n3', box), msg = $('.msg', box);
+    [n1, n2, n3].forEach(n => { n.classList.remove('live'); $('.v', n).textContent = '?'; });
+    msg.innerHTML = '…';
+    n1.classList.add('live'); $('.v', n1).innerHTML = c.input;
+    await wait(600); if (my !== tok) return;
+    n2.classList.add('live'); $('.v', n2).innerHTML = `<span class="ai-think" style="display:inline-block">🤖</span><br>${c.tool}`;
+    await wait(900); if (my !== tok) return;
+    $('.ai-think', n2).classList.remove('ai-think');
+    n3.classList.add('live'); const v = $('.v', n3); let i = 0;
+    while (i < c.out.length) { if (my !== tok) return; v.textContent = c.out.slice(0, ++i); await wait(22); }
+    msg.innerHTML = c.note;
+  });
+};
+
+/* ================= SIM: generative or not ================= */
+SIMS.sortgen = box => {
+  const ITEMS = [
+    { t: 'Write a new product description from a list of features', g: true, r: 'It makes <b>new text</b>.' },
+    { t: 'Put each parcel photo into “damaged” or “not damaged”', g: false, r: 'It only chooses a label (classification).' },
+    { t: 'Draft a polite reply to a hotel guest', g: true, r: 'It writes a <b>new message</b>.' },
+    { t: 'Search the catalogue for descriptions with similar words', g: false, r: 'It only finds things that already exist.' },
+    { t: 'Create a picture of a parcel from a text description', g: true, r: 'It makes a <b>new image</b>.' },
+    { t: 'Find which product features an old description mentions', g: false, r: 'It only finds information in existing text.' }
+  ];
+  box.innerHTML = `<h3>✨ Generative or not?</h3><p class="muted">Does the AI <b>create something new</b>? Sort each task. You can try again if you are wrong.</p>
+  <div class="tries cnt"></div><div class="sortcard"></div>
+  <div class="actions"><button class="btn gy" style="--c:var(--t2)">✨ Generative (creates new)</button><button class="btn ghost gn">🔍 Not generative (finds or sorts)</button></div>
+  <div class="msg">Choose an answer. 👆</div>`;
+  let list, k, score, tried;
+  const card = $('.sortcard', box), msg = $('.msg', box);
+  function start() { list = shuffle(ITEMS); k = 0; score = 0; show(); }
+  function show() {
+    tried = false;
+    if (k >= list.length) {
+      card.innerHTML = `🏆 Finished! First-try score: <b>${score} / ${list.length}</b>`;
+      $('.cnt', box).textContent = '';
+      msg.className = 'msg good'; msg.innerHTML = 'Remember: generative AI <b>creates new</b> text, images or music. <button class="btn small again" style="margin-left:8px">🔁 Play again</button>';
+      $('.again', msg).onclick = start; return;
+    }
+    $('.cnt', box).textContent = `Task ${k + 1} of ${list.length}`;
+    card.textContent = list[k].t; msg.className = 'msg'; msg.innerHTML = 'Choose an answer. 👆';
+  }
+  function pick(g) {
+    if (k >= list.length) return;
+    const it = list[k];
+    if (g === it.g) {
+      if (!tried) score++;
+      msg.className = 'msg good'; msg.innerHTML = `✅ Correct! ${it.r} <button class="btn small nx" style="margin-left:8px">Next ➜</button>`;
+      $('.nx', msg).onclick = () => { k++; show(); };
+    } else {
+      tried = true; msg.className = 'msg bad';
+      msg.innerHTML = `❌ Not quite. 💡 Hint: ask yourself — after the AI works, is there something <b>new</b> that did not exist before? Try the other button.`;
+    }
+  }
+  $('.gy', box).onclick = () => pick(true); $('.gn', box).onclick = () => pick(false);
+  start();
+};
+
+/* ================= SIM: prompt builder ================= */
+SIMS.prompt = box => {
+  const P = [
+    { k: 'role', l: '🎭 Role', t: 'Act as a polite hotel customer-service agent.' },
+    { k: 'task', l: '🎯 Task', t: 'Respond to the guest whose room service order was late.' },
+    { k: 'context', l: '📎 Context', t: 'Details: Room 214, dinner ordered at 8:00 pm, it arrived 45 minutes late.' },
+    { k: 'format', l: '📐 Format', t: 'Use three bullet points.' },
+    { k: 'examples', l: '🧩 Examples', t: 'Here are two of our past replies. Use the same style: [example 1] [example 2]' }
+  ];
+  box.innerHTML = `<h3>🧪 Prompt builder</h3>
+  <p class="muted">Situation: a hotel guest’s room service order was late. Click the pieces to add them to your prompt. Watch the AI’s answer change.</p>
+  <div class="chips">${P.map(p => `<button class="chip" data-k="${p.k}" aria-pressed="false">${p.l}</button>`).join('')}</div>
+  <div class="row2"><div><h4 style="margin:4px 0 6px">✍️ Your prompt</h4><div class="promptbox"></div><div class="meter" aria-hidden="true">${'<i></i>'.repeat(5)}</div><div class="tip" style="font-size:15px"></div></div>
+  <div><h4 style="margin:4px 0 6px">🤖 The AI’s answer</h4><div class="aiout"></div></div></div>`;
+  const on = new Set();
+  function draw() {
+    $('.promptbox', box).innerHTML = on.size ? P.filter(p => on.has(p.k)).map(p => `<span>${p.t}</span>`).join(' ') : '<span class="muted">(empty: click a piece above)</span>';
+    $$('.meter i', box).forEach((m, k) => m.classList.toggle('on', k < on.size));
+    const miss = P.filter(p => !on.has(p.k)).map(p => p.l);
+    $('.tip', box).innerHTML = on.size === 5 ? '🏆 Perfect prompt! It has every piece.' : on.has('task') ? '➕ Try adding: ' + miss.join(', ') : '⚠️ Start with the <b>Task</b>. Without a task, the AI doesn’t know what to do.';
+    const out = $('.aiout', box);
+    if (!on.has('task')) { out.innerHTML = on.size ? '🤖 I see some information… but what do you want me to <b>do</b>? 🤔' : '🤖 …'; return; }
+    const role = on.has('role'), ctx = on.has('context');
+    const s = [role ? 'We are truly sorry that your room service order was late.' : 'Your room service order was late.',
+      ctx ? 'Your dinner for Room 214 arrived 45 minutes after you ordered it at 8:00 pm.' : 'The order took a long time.',
+      role ? 'We have removed the charge, and we will send you a free dessert tonight.' : 'We will try to be faster next time.'];
+    let h = on.has('format') ? '<ul>' + s.map(x => `<li>${x}</li>`).join('') + '</ul>' : `<p style="margin:0">${s.join(' ')}</p>`;
+    if (on.has('examples')) h += '<p style="margin:6px 0 0"><i>Warm regards,<br>The Pearl Hotel Team 🌙</i></p>';
+    const notes = [on.has('format') ? '✅ three bullet points' : '❌ one paragraph (no format)', role ? '✅ polite tone' : '❌ plain tone', ctx ? '✅ real details' : '❌ no details', on.has('examples') ? '✅ hotel style' : '➖ no style examples'];
+    out.innerHTML = h + `<div class="tries" style="margin-top:8px">${notes.join(' · ')}</div>`;
+  }
+  $$('.chip', box).forEach(c => c.onclick = () => { const k = c.dataset.k; on.has(k) ? on.delete(k) : on.add(k); c.classList.toggle('on', on.has(k)); c.setAttribute('aria-pressed', on.has(k)); draw(); });
+  draw();
+};
+
+/* ================= SIM: prompt tricks ================= */
+SIMS.tricks = box => {
+  const td = 'style="border:1px solid var(--border);padding:3px 6px"';
+  box.innerHTML = `<h3>🧠 Two prompt tricks for the exam</h3>
+  <div class="row2">
+    <div class="mini"><h4>1. Long chat? The AI can forget.</h4>
+      <div class="chatcol">
+        <div class="bub u fade">Always use a table: Issue | Action | Status.</div>
+        <div class="gap">⋮ 40 more messages ⋮</div>
+        <div class="bub u">Summarise the complaint.</div>
+        <div class="bub a">The customer had a problem with the order and we are helping them… <b>❌ a paragraph, no table, no latest update</b></div>
+      </div>
+      <button class="btn small fixbtn" style="margin-top:10px">🛠️ Show the fix</button><div class="fixout"></div></div>
+    <div class="mini"><h4>2. Zero-shot vs few-shot</h4>
+      <p style="margin:0;font-size:15px"><b>Zero-shot</b> (no examples):</p>
+      <div class="shot"><span class="tile">✍️ “Write a delivery update.”</span>➜ 🤖 ➜<span class="tile">❓ any style</span></div>
+      <p style="margin:10px 0 0;font-size:15px"><b>Few-shot</b> (a few examples):</p>
+      <div class="shot"><span class="tile ex">📄 Example 1</span><span class="tile ex">📄 Example 2</span>+<span class="tile">✍️ “Write a new update.”</span>➜ 🤖 ➜<span class="tile">✅ same style</span></div>
+      <p style="font-size:14px;margin-bottom:0" class="muted">“Shot” = example. Few-shot = give a few examples, and the AI copies the style.</p></div>
+  </div>`;
+  $('.fixbtn', box).onclick = () => {
+    $('.fixout', box).innerHTML = `<div class="chatcol" style="margin-top:10px;animation:pop .3s">
+      <div class="bub u">Using the latest customer update below, summarise the complaint in a table with the columns Issue, Action and Status: [update]</div>
+      <div class="bub a"><table style="border-collapse:collapse;font-size:13px"><tr><th ${td}>Issue</th><th ${td}>Action</th><th ${td}>Status</th></tr><tr><td ${td}>Late order</td><td ${td}>New delivery booked</td><td ${td}>Arrives today ✅</td></tr></table></div></div>
+      <p style="font-size:14px;margin:8px 0 0">✅ <b>One complete prompt</b> = the new information + the exact format. Don’t depend on the AI’s memory.</p>`;
+  };
+};
+
+/* ================= SIM: fact check ================= */
+SIMS.factcheck = box => {
+  box.innerHTML = `<h3>🕵️ Be an AI fact-checker</h3><p class="muted">AI answers can sound sure and still be wrong. Check them!</p>
+  <div class="fc">
+    <div class="mini"><h4>🌀 Case 1: a source</h4>
+      <div class="chatcol"><div class="bub u">Give me a research article about AI robots in schools.</div>
+      <div class="bub a">Sure! Read <b>“Robots That Teach Math”</b> by Dr. A. Karim, <i>Journal of School AI</i>, 2021. It proves robots double test scores. 😊</div></div>
+      <button class="btn small s1">🔍 Search the library for this article</button><div class="o1"></div></div>
+    <div class="mini"><h4>👩‍💼 Case 2: a warranty answer</h4>
+      <div class="bub a" style="max-width:100%">🤖 Draft: “Your warranty lasts <span class="w1">5 years</span> and <span class="w2">covers water damage</span>.”</div>
+      <div class="policy">📘 <b>Company policy:</b> warranty = <b>2 years</b>. Water damage is <b>not covered</b>.</div>
+      <button class="btn small s2">👩‍💼 Employee: check it against the policy</button><div class="o2"></div></div>
+  </div>`;
+  $('.s1', box).onclick = async () => {
+    const o = $('.o1', box); o.innerHTML = '<p><span class="spinner"></span> Searching…</p>';
+    await wait(1300); if (!box.isConnected) return;
+    o.innerHTML = '<div class="msg bad">❌ <b>0 results.</b> This article does not exist. The AI made it up and said it confidently. This is a <b>hallucination</b>. 🌀</div>';
+  };
+  $('.s2', box).onclick = () => {
+    $('.w1', box).className = 'strike'; $('.w2', box).className = 'strike';
+    $('.o2', box).innerHTML = '<div class="msg good">Fixed: “Your warranty lasts <span class="fix">2 years</span> and <span class="fix">does not cover water damage</span>.”<br>✅ A <b>human check</b> stopped a wrong answer before it reached the customer.</div>';
+  };
+};
+
+/* ================= start ================= */
+route();
+</script>
+</body>
+</html>
